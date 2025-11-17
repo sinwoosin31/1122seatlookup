@@ -4,213 +4,361 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>品睿♡瑜歆婚宴座位查詢</title>
-
 <style>
   body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(180deg, #ffe6f2 0%, #ffb6d9 100%);
+    background: #ffe4f0;
     color: #333;
     display: flex;
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding: 40px 15px;
+    padding-top: 50px;
   }
-
   .container {
-    background: #ffffffcc;
-    backdrop-filter: blur(10px);
-    padding: 25px 25px;
+    background: #fff0f8;
+    padding: 30px 40px;
     border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.25);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-width: 400px;
     width: 100%;
-    max-width: 420px;
     text-align: center;
-    border: 2px solid #ffd6e8;
   }
-
   h1 {
-    color: #ff5fa2;
-    margin-bottom: 10px;
-    font-size: 22px;
+    color: #ff69b4;
+    margin-bottom: 20px;
   }
-
   input[type="text"] {
     padding: 12px 15px;
-    width: 90%;
-    border-radius: 12px;
-    border: 2px solid #ffb6d9;
-    background: #fff;
+    width: 82%;
+    border-radius: 10px;
+    border: 1px solid #ffb6c1;
     margin-bottom: 15px;
     font-size: 16px;
   }
-
   button {
     background-color: #ff69b4;
     border: none;
     color: white;
     padding: 12px 20px;
-    border-radius: 12px;
+    border-radius: 10px;
     font-size: 16px;
     cursor: pointer;
+    transition: 0.2s;
     width: 90%;
   }
-
+  button:hover {
+    background-color: #ff1493;
+  }
+  .result {
+    margin-top: 20px;
+    font-size: 18px;
+  }
   .option-btn {
     display: block;
-    margin: 6px auto;
-    background-color: #ffb3cc;
+    margin: 5px auto;
+    background-color: #ffb6c1;
     border: none;
     color: white;
     padding: 10px 15px;
-    border-radius: 12px;
-    width: 80%;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 70%;
   }
-
-  #imageWrapper {
-    width: 100%;
-    overflow: hidden;
-    border-radius: 14px;
+  .option-btn:hover {
+    background-color: #ff69b4;
+  }
+  img.seat-img {
+    width: 100%;       /* 容器寬度自動縮放 */
+    max-width: 350px;  /* 限制最大寬度 */
+    height: auto;      /* 高度自動，保持比例 */
     margin-top: 15px;
-    touch-action: none;
-  }
-
-  #seatMap {
-    width: 100%;
-    height: auto;
-    transform-origin: center center;
-    border-radius: 12px;
-    transition: opacity 0.6s;
-  }
-
-  .fade-in {
-    opacity: 0;
-    animation: fadeIn 0.8s ease-out forwards;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to   { opacity: 1; transform: scale(1); }
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; /* 置中圖片 */
   }
 </style>
 </head>
-
 <body>
 <div class="container">
   <h1>品睿♡瑜歆婚宴座位查詢</h1>
   <h1>🎀</h1>
-
   <input type="text" id="nameInput" placeholder="請輸入名字">
   <button id="searchBtn">查詢座位</button>
-
   <div class="result" id="result"></div>
-
-  <!-- 座位圖（預先顯示） -->
-  <div id="imageWrapper">
-    <img id="seatMap" class="fade-in" 
-         src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
-  </div>
 </div>
 
-
 <script>
-// ========= 基本設定 =========
-const webAppUrl = "https://script.google.com/macros/s/AKfycbwt4lerkFrFEasl0XjpaiVo9OyKiKcGWMSB-VWiaBjHLhP67M6l3q6teo4YB8vOWPp1/exec";
+const webAppUrl = "https://script.google.com/macros/s/AKfycbwt4lerkFrFEasl0XjpaiVo9OyKiKcGWMSB-VWiaBjHLhP67M6l3q6teo4YB8vOWPp1/exec"; // 改成你的 Web App URL
+const picUrl = "https://sinwoosin31.github.io/1122seatlookup/img/seat.png"  //座位圖網址
 const nameInput = document.getElementById("nameInput");
+const searchBtn = document.getElementById("searchBtn");
 const resultDiv = document.getElementById("result");
 
-document.getElementById("searchBtn").addEventListener("click", searchSeat);
-nameInput.addEventListener("keypress", e => { if(e.key === "Enter") searchSeat(); });
+searchBtn.addEventListener("click", searchSeat);
+nameInput.addEventListener("keypress", function(e){
+  if(e.key === "Enter") searchSeat();
+});
 
-// ========= 前端姓名隱碼 =========
+// 前端姓名隱碼函式
 function maskName(name) {
-  const len = name.length;
-  if (len <= 1) return name;
-  if (len == 2) return name[0] + "*";
-  return name[0] + "*".repeat(len - 2) + name[len - 1];
+  const nameLength = name.length;
+  if (nameLength < 2) return name;
+  if (nameLength === 2) return name.charAt(0) + '*';
+  if (nameLength > 2 && nameLength < 5) return name.charAt(0) + '*'.repeat(nameLength - 2) + name.charAt(nameLength - 1);
+  return name;
 }
 
-// ========= 查詢座位 =========
 function searchSeat() {
   const name = nameInput.value.trim();
-  if (!name) {
+  if(!name){
     resultDiv.textContent = "請輸入名字";
     return;
   }
-
   resultDiv.textContent = "查詢中...";
 
   fetch(`${webAppUrl}?name=${encodeURIComponent(name)}`)
     .then(res => res.json())
     .then(data => {
-      resultDiv.innerHTML = "";
+      resultDiv.innerHTML = ""; // 清空結果
 
-      if (data.seat) {
+      if(data.seat){ // 單筆匹配
         resultDiv.innerHTML = `🎀 ${data.name} 的座位是 ${data.seat} 🎀<br>`;
+        const img = document.createElement("img");
+        img.src = picUrl;
+        img.alt = "座位圖";
+        img.className = "seat-img";
+        resultDiv.appendChild(img);
       }
-      else if (data.multiple) {
-        resultDiv.textContent = "找到多位符合的賓客，請選擇：";
+      else if(data.multiple){ // 多筆匹配
+        resultDiv.textContent = "找到多位符合的賓客，請點選您的名字：";
         data.multiple.forEach(item => {
           const btn = document.createElement("button");
           btn.className = "option-btn";
-          btn.textContent = maskName(item.name);
-          btn.onclick = () => {
+          btn.textContent = maskName(item.name); // 顯示隱碼姓名
+          btn.addEventListener("click", ()=> {
             resultDiv.innerHTML = `🎀 ${item.name} 的座位是 ${item.seat} 🎀<br>`;
-          };
+            const img = document.createElement("img");
+            img.src = picUrl;
+            img.alt = "座位圖";
+            img.className = "seat-img";
+            resultDiv.append<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>品睿♡瑜歆婚宴座位查詢</title>
+<style>
+  body {
+  font-family: 'Arial', sans-serif;
+  background: #ffe4f0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;   /* 手機版更彈性的邊距 */
+  margin: 0;
+}
+
+.container {
+  background: #fff0f8;
+  padding: 25px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  width: 100%;
+  max-width: 420px;   /* 手機友好寬度 */
+  text-align: center;
+}
+
+h1 {
+  color: #ff69b4;
+  font-size: 22px;     /* 手機更好讀 */
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+input[type="text"] {
+  padding: 14px 15px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #ffb6c1;
+  margin-bottom: 15px;
+  font-size: 17px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #ff69b4;
+  border: none;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background-color: #ff1493;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* 多筆匹配按鈕 */
+.option-btn {
+  display: block;
+  margin: 8px auto;
+  background-color: #ffb6c1;
+  border: none;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+  width: 100%;
+  max-width: 260px;
+  box-sizing: border-box;
+}
+
+.option-btn:hover {
+  background-color: #ff69b4;
+}
+
+/* 座位圖 RWD */
+img.seat-img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;      /* 完整 RWD 不會再出界 */
+  margin-top: 15px;
+  border-radius: 12px;
+  display: block;
+}
+/* 🌸 Loading 動畫 */
+.loading {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #ffb6c1;
+  border-top-color: #ff69b4;
+  border-radius: 50%;
+  margin: 15px auto;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 🌸 淡入動畫 */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* 座位圖（固定顯示 + RWD） */
+#seatMap {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 12px;
+  margin-top: 20px;
+  display: block;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>品睿♡瑜歆婚宴座位查詢</h1>
+  <h1>🎀</h1>
+  <input type="text" id="nameInput" placeholder="請輸入名字">
+  <button id="searchBtn">查詢座位</button>
+  <div class="result" id="result"></div>
+  <img id="seatMap" class="fade-in" src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
+</div>
+
+<script>
+const webAppUrl = "https://script.google.com/macros/s/AKfycbwt4lerkFrFEasl0XjpaiVo9OyKiKcGWMSB-VWiaBjHLhP67M6l3q6teo4YB8vOWPp1/exec"; // 改成你的 Web App URL
+const picUrl = "https://sinwoosin31.github.io/1122seatlookup/img/seat.png"  //座位圖網址
+const nameInput = document.getElementById("nameInput");
+const searchBtn = document.getElementById("searchBtn");
+const resultDiv = document.getElementById("result");
+
+searchBtn.addEventListener("click", searchSeat);
+nameInput.addEventListener("keypress", function(e){
+  if(e.key === "Enter") searchSeat();
+});
+
+// 前端姓名隱碼函式
+function maskName(name) {
+  const nameLength = name.length;
+  if (nameLength < 2) return name;
+  if (nameLength === 2) return name.charAt(0) + '*';
+  if (nameLength > 2 && nameLength < 5) return name.charAt(0) + '*'.repeat(nameLength - 2) + name.charAt(nameLength - 1);
+  return name;
+}
+
+function searchSeat() {
+  const name = nameInput.value.trim();
+  if(!name){
+    resultDiv.textContent = "請輸入名字";
+    return;
+  }
+  resultDiv.textContent = "查詢中...";
+
+  fetch(`${webAppUrl}?name=${encodeURIComponent(name)}`)
+    .then(res => res.json())
+    .then(data => {
+      resultDiv.innerHTML = ""; // 清空結果
+
+      if(data.seat){ // 單筆匹配
+        resultDiv.innerHTML = `🎀 ${data.name} 的座位是 ${data.seat} 🎀<br>`;
+        const img = document.createElement("img");
+        img.src = picUrl;
+        img.alt = "座位圖";
+        img.className = "seat-img";
+        resultDiv.appendChild(img);
+      }
+      else if(data.multiple){ // 多筆匹配
+        resultDiv.textContent = "找到多位符合的賓客，請點選您的名字：";
+        data.multiple.forEach(item => {
+          const btn = document.createElement("button");
+          btn.className = "option-btn";
+          btn.textContent = maskName(item.name); // 顯示隱碼姓名
+          btn.addEventListener("click", ()=> {
+            resultDiv.innerHTML = `🎀 ${item.name} 的座位是 ${item.seat} 🎀<br>`;
+            const img = document.createElement("img");
+            img.src = picUrl;
+            img.alt = "座位圖";
+            img.className = "seat-img";
+            resultDiv.appendChild(img);
+          });
           resultDiv.appendChild(btn);
         });
       }
-      else {
-        resultDiv.textContent = data.error || "查無資料";
+      else if(data.error){
+        resultDiv.textContent = data.error;
       }
+    })
+    .catch(err=>{
+      console.error(err);
+      resultDiv.textContent = "查詢失敗，請稍後再試";
     });
 }
-
-
-// =========（永久有效）座位圖縮放功能 =========
-const img = document.getElementById("seatMap");
-let scale = 1, lastScale = 1;
-let posX = 0, posY = 0;
-let lastX = 0, lastY = 0;
-let startDistance = 0;
-
-img.addEventListener("touchstart", (e) => {
-  if (e.touches.length === 2) {
-    startDistance = getDistance(e.touches[0], e.touches[1]);
-  } else if (e.touches.length === 1) {
-    lastX = e.touches[0].clientX - posX;
-    lastY = e.touches[0].clientY - posY;
-  }
-}, { passive: false });
-
-img.addEventListener("touchmove", (e) => {
-  e.preventDefault();
-
-  if (e.touches.length === 2) {
-    const newDist = getDistance(e.touches[0], e.touches[1]);
-    scale = Math.min(Math.max(lastScale * (newDist / startDistance), 1), 3);
-    updateTransform();
-  }
-
-  if (e.touches.length === 1 && scale > 1) {
-    posX = e.touches[0].clientX - lastX;
-    posY = e.touches[0].clientY - lastY;
-    updateTransform();
-  }
-}, { passive: false });
-
-img.addEventListener("touchend", () => {
-  lastScale = scale;
-});
-
-function getDistance(a, b) {
-  return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
-}
-
-function updateTransform() {
-  img.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
-}
-
 </script>
-
 </body>
 </html>
