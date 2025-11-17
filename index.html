@@ -97,7 +97,7 @@ function maskName(name) {
   if (nameLength < 2) return name;
   if (nameLength === 2) return name.charAt(0) + '*';
   if (nameLength > 2 && nameLength < 5) return name.charAt(0) + '*'.repeat(nameLength - 2) + name.charAt(nameLength - 1);
-  return name.substring(0, 10) + "…";
+  //return name.substring(0, 10) + "…";
 }
 
 function searchSeat() {
