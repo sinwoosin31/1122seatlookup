@@ -82,6 +82,7 @@
 
 <script>
 const webAppUrl = "https://script.google.com/macros/s/AKfycbwt4lerkFrFEasl0XjpaiVo9OyKiKcGWMSB-VWiaBjHLhP67M6l3q6teo4YB8vOWPp1/exec"; // 改成你的 Web App URL
+const picUrl = "https://sinwoosin31.github.io/1122seatlookup/img/seatmap.png"  //座位圖網址
 const nameInput = document.getElementById("nameInput");
 const searchBtn = document.getElementById("searchBtn");
 const resultDiv = document.getElementById("result");
@@ -116,7 +117,7 @@ function searchSeat() {
       if(data.seat){ // 單筆匹配
         resultDiv.innerHTML = `🎀 ${data.name} 的座位是 ${data.seat} 🎀<br>`;
         const img = document.createElement("img");
-        img.src = "https://sinwoosin31.github.io/1122seatlookup/img/seatmap.png"; // GitHub 上的座位圖
+        img.src = picUrl;
         img.alt = "座位圖";
         img.className = "seat-img";
         resultDiv.appendChild(img);
@@ -130,7 +131,7 @@ function searchSeat() {
           btn.addEventListener("click", ()=> {
             resultDiv.innerHTML = `🎀 ${item.name} 的座位是 ${item.seat} 🎀<br>`;
             const img = document.createElement("img");
-            img.src = "https://sinwoosin31.github.io/1122seatlookup/img/seatmap.png";
+            img.src = picUrl;
             img.alt = "座位圖";
             img.className = "seat-img";
             resultDiv.appendChild(img);
