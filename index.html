@@ -105,6 +105,14 @@ function searchSeat() {
       resultDiv.innerHTML = ""; // 清空結果
       if(data.seat){
         resultDiv.textContent = `🎀 ${data.name} 的座位是 ${data.seat} 🎀`;
+        const img = document.createElement("img");
+        // 顯示座位圖
+        img.src = "https://drive.google.com/uc?export=view&id=10UEdxoDdjiBgwDJ8XKzCGXhQP4YDKtKg";
+        img.alt = "座位圖";
+        img.style.width = "100%";
+        img.style.marginTop = "15px";
+        img.style.borderRadius = "10px";
+        resultDiv.appendChild(img);
       } else if(data.multiple){
         resultDiv.textContent = "找到多位符合的賓客，請點選您的名字：";
         data.multiple.forEach(item => {
@@ -113,6 +121,14 @@ function searchSeat() {
           btn.textContent = item.name;
           btn.addEventListener("click", ()=> {
             resultDiv.textContent = `🎀 ${item.name} 的座位是 ${item.seat} 🎀`;
+            // 顯示座位圖
+            const img = document.createElement("img");
+            img.src = "https://drive.google.com/uc?export=view&id=10UEdxoDdjiBgwDJ8XKzCGXhQP4YDKtKg";
+            img.alt = "座位圖";
+            img.style.width = "100%";        // 自動調整寬度
+            img.style.marginTop = "15px";    // 跟文字保持距離
+            img.style.borderRadius = "10px"; // 可愛圓角
+            resultDiv.appendChild(img);
           });
           resultDiv.appendChild(btn);
         });
