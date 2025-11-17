@@ -6,79 +6,98 @@
 <title>品睿♡瑜歆婚宴座位查詢</title>
 <style>
   body {
-    font-family: 'Arial', sans-serif;
-    background: #ffe4f0;
-    color: #333;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    min-height: 100vh;
-    padding-top: 50px;
-  }
-  .container {
-    background: #fff0f8;
-    padding: 30px 40px;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    max-width: 400px;
-    width: 100%;
-    text-align: center;
-  }
-  h1 {
-    color: #ff69b4;
-    margin-bottom: 20px;
-  }
-  input[type="text"] {
-    padding: 12px 15px;
-    width: 82%;
-    border-radius: 10px;
-    border: 1px solid #ffb6c1;
-    margin-bottom: 15px;
-    font-size: 16px;
-  }
-  button {
-    background-color: #ff69b4;
-    border: none;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 10px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.2s;
-    width: 90%;
-  }
-  button:hover {
-    background-color: #ff1493;
-  }
-  .result {
-    margin-top: 20px;
-    font-size: 18px;
-  }
-  .option-btn {
-    display: block;
-    margin: 5px auto;
-    background-color: #ffb6c1;
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.2s;
-    width: 70%;
-  }
-  .option-btn:hover {
-    background-color: #ff69b4;
-  }
-  img.seat-img {
-    width: 100%;       /* 容器寬度自動縮放 */
-    max-width: 350px;  /* 限制最大寬度 */
-    height: auto;      /* 高度自動，保持比例 */
-    margin-top: 15px;
-    border-radius: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto; /* 置中圖片 */
-  }
+  font-family: 'Arial', sans-serif;
+  background: #ffe4f0;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;   /* 手機版更彈性的邊距 */
+  margin: 0;
+}
+
+.container {
+  background: #fff0f8;
+  padding: 25px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+  width: 100%;
+  max-width: 420px;   /* 手機友好寬度 */
+  text-align: center;
+}
+
+h1 {
+  color: #ff69b4;
+  font-size: 22px;     /* 手機更好讀 */
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+
+input[type="text"] {
+  padding: 14px 15px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid #ffb6c1;
+  margin-bottom: 15px;
+  font-size: 17px;
+  box-sizing: border-box;
+}
+
+button {
+  background-color: #ff69b4;
+  border: none;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 17px;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button:hover {
+  background-color: #ff1493;
+}
+
+.result {
+  margin-top: 20px;
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+/* 多筆匹配按鈕 */
+.option-btn {
+  display: block;
+  margin: 8px auto;
+  background-color: #ffb6c1;
+  border: none;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.2s;
+  width: 100%;
+  max-width: 260px;
+  box-sizing: border-box;
+}
+
+.option-btn:hover {
+  background-color: #ff69b4;
+}
+
+/* 座位圖 RWD */
+img.seat-img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;      /* 完整 RWD 不會再出界 */
+  margin-top: 15px;
+  border-radius: 12px;
+  display: block;
+}
+
 </style>
 </head>
 <body>
