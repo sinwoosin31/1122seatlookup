@@ -91,6 +91,15 @@ nameInput.addEventListener("keypress", function(e){
   if(e.key === "Enter") searchSeat();
 });
 
+// 前端姓名隱碼函式
+function maskName(name) {
+  const nameLength = name.length;
+  if (nameLength < 2) return name;
+  if (nameLength === 2) return name.charAt(0) + '*';
+  if (nameLength > 2 && nameLength < 5) return name.charAt(0) + '*'.repeat(nameLength - 2) + name.charAt(nameLength - 1);
+  return name.substring(0, 10) + "…";
+}
+
 function searchSeat() {
   const name = nameInput.value.trim();
   if(!name){
@@ -98,41 +107,38 @@ function searchSeat() {
     return;
   }
   resultDiv.textContent = "查詢中...";
-  
+
   fetch(`${webAppUrl}?name=${encodeURIComponent(name)}`)
     .then(res => res.json())
     .then(data => {
       resultDiv.innerHTML = ""; // 清空結果
-      if(data.seat){
-        resultDiv.textContent = `🎀 ${data.name} 的座位是 ${data.seat} 🎀`;
+
+      if(data.seat){ // 單筆匹配
+        resultDiv.innerHTML = `🎀 ${data.name} 的座位是 ${data.seat} 🎀<br>`;
         const img = document.createElement("img");
-        // 顯示座位圖
-        img.src = "https://sinwoosin31.github.io/1122seatlookup/img/seat.png";
+        img.src = "https://sinwoosin31.github.io/1122seatlookup/img/seatmap.png"; // GitHub 上的座位圖
         img.alt = "座位圖";
-        img.style.width = "100%";
-        img.style.marginTop = "15px";
-        img.style.borderRadius = "10px";
+        img.className = "seat-img";
         resultDiv.appendChild(img);
-      } else if(data.multiple){
+      }
+      else if(data.multiple){ // 多筆匹配
         resultDiv.textContent = "找到多位符合的賓客，請點選您的名字：";
         data.multiple.forEach(item => {
           const btn = document.createElement("button");
           btn.className = "option-btn";
-          btn.textContent = item.name;
+          btn.textContent = maskName(item.name); // 顯示隱碼姓名
           btn.addEventListener("click", ()=> {
-            resultDiv.textContent = `🎀 ${item.name} 的座位是 ${item.seat} 🎀`;
-            // 顯示座位圖
+            resultDiv.innerHTML = `🎀 ${item.name} 的座位是 ${item.seat} 🎀<br>`;
             const img = document.createElement("img");
-            img.src = "https://sinwoosin31.github.io/1122seatlookup/img/seat.png";
+            img.src = "https://sinwoosin31.github.io/1122seatlookup/img/seatmap.png";
             img.alt = "座位圖";
-            img.style.width = "100%";        // 自動調整寬度
-            img.style.marginTop = "15px";    // 跟文字保持距離
-            img.style.borderRadius = "10px"; // 可愛圓角
+            img.className = "seat-img";
             resultDiv.appendChild(img);
           });
           resultDiv.appendChild(btn);
         });
-      } else if(data.error){
+      }
+      else if(data.error){
         resultDiv.textContent = data.error;
       }
     })
