@@ -10,83 +10,129 @@
 <title>品睿♡瑜歆婚宴座位查詢</title>
 
 <style>
+  /* ===== 全局 ===== */
   body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(180deg, #ffe6f2 0%, #ffb6d9 100%);
-    color: #333;
+    margin: 0;
+    padding: 40px 15px;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    min-height: 100vh;
-    padding: 20px 15px;
+    background: radial-gradient(circle at 20% 30%, #ffd6e9, transparent 60%),
+                radial-gradient(circle at 80% 70%, #ffe4f2, transparent 60%),
+                #ffeef8;
+    color: #333;
+    overflow-x: hidden;
   }
-
+  
+  /* ===== 玻璃卡片 Container ===== */
   .container {
-    background: #ffffffcc;
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
     padding: 25px 25px;
     border-radius: 20px;
-    box-shadow: 0 8px 25px rgba(255, 105, 180, 0.25);
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
     width: 100%;
     max-width: 420px;
     text-align: center;
-    border: 2px solid #ffd6e8;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    animation: fadeIn 1s ease;
   }
-
+  
+  /* ===== 標題 ===== */
   h1 {
     color: #ff5fa2;
-    margin-bottom: 10px;
     font-size: 22px;
+    margin: 8px 0;
+    text-shadow: 0 2px 6px rgba(255, 150, 200, 0.4);
   }
-
+  
+  /* ===== 輸入框 ===== */
   input[type="text"] {
+    width: 90%;
     padding: 12px 15px;
-    width: 82%;
     border-radius: 12px;
-    border: 2px solid #ffb6d9;
-    background: #fff;
-    margin-bottom: 15px;
+    border: 2px solid #ffceeb;
+    background: #fff8fc;
     font-size: 16px;
+    margin-bottom: 15px;
+    box-shadow: inset 0 0 8px rgba(255, 150, 200, 0.2);
+    transition: all 0.2s ease;
   }
-
+  input[type="text"]:focus {
+    border-color: #ff69b4;
+    box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
+    outline: none;
+  }
+  
+  /* ===== 按鈕 ===== */
   button {
-    background-color: #ff69b4;
-    border: none;
+    background: linear-gradient(135deg, #ff9acb, #ff77a9);
     color: white;
+    border: none;
     padding: 12px 20px;
     border-radius: 12px;
     font-size: 16px;
     cursor: pointer;
     width: 90%;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(255, 120, 180, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
   }
-
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(255, 120, 180, 0.55);
+  }
+  
+  /* ===== 多選按鈕 ===== */
   .option-btn {
     display: block;
     margin: 6px auto;
-    background-color: #ffb3cc;
+    background: linear-gradient(135deg, #ffb3cc, #ff8cb4);
     border: none;
     color: white;
     padding: 10px 15px;
     border-radius: 12px;
     width: 80%;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(255, 100, 180, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
   }
-
+  .option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 100, 180, 0.45);
+  }
+  
+  /* ===== 座位圖容器 ===== */
   #imageWrapper {
     width: 100%;
     overflow: hidden;
-    border-radius: 14px;
+    border-radius: 16px;
     margin-top: 15px;
     touch-action: none;
+    box-shadow: 0 6px 18px rgba(255, 120, 180, 0.35);
   }
-
+  
+  /* ===== 座位圖本體 ===== */
   #seatMap {
     width: 100%;
     height: auto;
-    transform-origin: center center;
     border-radius: 12px;
-    transition: opacity 0.6s;
+    transform-origin: center center;
+    transition: opacity 0.6s, transform 0.3s;
+    animation: fadeIn 1.2s ease-out;
   }
-
+  
+  /* ===== 結果區 ===== */
+  .result {
+    font-size: 18px;
+    margin-top: 15px;
+    color: #ff4fa0;
+    text-shadow: 0 2px 4px rgba(255, 150, 200, 0.4);
+  }
+  
+  /* ===== 淡入動畫 ===== */
   .fade-in {
     opacity: 0;
     animation: fadeIn 0.8s ease-out forwards;
@@ -95,6 +141,21 @@
     from { opacity: 0; transform: scale(0.98); }
     to   { opacity: 1; transform: scale(1); }
   }
+  
+  /* ===== 可擴展 Loading 動畫 ===== */
+  .loading {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ffb6c1;
+    border-top-color: #ff69b4;
+    border-radius: 50%;
+    margin: 15px auto;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
 </style>
 </head>
 
