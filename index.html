@@ -145,7 +145,7 @@ function searchSeat() {
       resultDiv.innerHTML = "";
 
       if (data.seat) {
-        resultDiv.innerHTML = `🎀 ${data.name} 的座位是第 ${data.seat} 桌🎀<br>`;
+        resultDiv.innerHTML = `🎀 ${data.name} 的座位是 ${data.seat} 🎀<br>`;
       }
       else if (data.multiple) {
         resultDiv.textContent = "找到多位符合的賓客，請選擇：";
@@ -154,7 +154,7 @@ function searchSeat() {
           btn.className = "option-btn";
           btn.textContent = maskName(item.name);
           btn.onclick = () => {
-            resultDiv.innerHTML = `🎀 ${item.name} 的座位是第 ${item.seat} 桌🎀<br>`;
+            resultDiv.innerHTML = `🎀 ${item.name} 的座位是 ${item.seat} 🎀<br>`;
           };
           resultDiv.appendChild(btn);
         });
