@@ -190,9 +190,11 @@ nameInput.addEventListener("keypress", e => { if(e.key === "Enter") searchSeat()
 // ========= 前端姓名隱碼 =========
 function maskName(name) {
   const len = name.length;
+  if (name.includes("阿")) return name;
   if (len <= 1) return name;
   if (len == 2) return name[0] + "*";
-  return name[0] + "*".repeat(len - 2) + name[len - 1];
+  if (len == 3) return name[0] + "*" + name[len - 1];
+  return name;
 }
 
 // ========= 查詢座位 =========
