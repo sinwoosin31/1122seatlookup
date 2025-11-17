@@ -1,108 +1,126 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-TW">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>座位查詢</title>
 <style>
   body {
-    font-family: "Microsoft JhengHei", sans-serif;
-    background: #ffe4f2;
-    margin: 0;
-    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: #ffe4f0;
+    color: #333;
     display: flex;
     justify-content: center;
-    align-items: center;
-    height: 100vh;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding-top: 50px;
   }
   .container {
-    width: 90%;
-    max-width: 380px;
-    background: #ffffffee;
-    padding: 28px 26px;
-    border-radius: 22px;
-    box-shadow: 0 6px 20px rgba(255, 155, 200, 0.4);
+    background: #fff0f8;
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    max-width: 400px;
+    width: 100%;
     text-align: center;
-    position: relative;
   }
-  h2 {
+  h1 {
     color: #ff69b4;
     margin-bottom: 20px;
-    font-size: 22px;
-    font-weight: bold;
   }
-  .cute-icon {
-    position: absolute;
-    width: 70px;
-    top: -35px;
-    right: -25px;
-    opacity: 0.9;
-  }
-  input {
-    width: 90%;
-    padding: 12px 14px;
+  input[type="text"] {
+    padding: 12px 15px;
+    width: 80%;
+    border-radius: 10px;
+    border: 1px solid #ffb6c1;
+    margin-bottom: 15px;
     font-size: 16px;
-    border: 2px solid #ffb6d9;
-    border-radius: 12px;
-    outline: none;
-    margin-bottom: 16px;
-    background: #fff0f7;
   }
   button {
-    width: 100%;
-    padding: 12px;
-    background: #ff8ac6;
-    color: white;
-    font-size: 17px;
+    background-color: #ff69b4;
     border: none;
-    border-radius: 14px;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 16px;
     cursor: pointer;
     transition: 0.2s;
   }
   button:hover {
-    background: #ff6ab3;
+    background-color: #ff1493;
   }
   .result {
-    margin-top: 18px;
+    margin-top: 20px;
     font-size: 18px;
-    color: #d95d9c;
-    font-weight: bold;
-    min-height: 28px;
+  }
+  .option-btn {
+    display: block;
+    margin: 5px auto;
+    background-color: #ffb6c1;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+    width: 70%;
+  }
+  .option-btn:hover {
+    background-color: #ff69b4;
   }
 </style>
 </head>
 <body>
-  <div class="container">
-    <h2>座位查詢</h2>
-    <input id="nameInput" type="text" placeholder="請輸入您的名字" />
-    <button onclick="searchSeat()">查詢</button>
-    <div class="result" id="result"></div>
-  </div>
+<div class="container">
+  <h1>座位查詢 🎀</h1>
+  <input type="text" id="nameInput" placeholder="請輸入名字">
+  <button id="searchBtn">查詢座位</button>
+  <div class="result" id="result"></div>
+</div>
 
 <script>
+const webAppUrl = "https://script.google.com/macros/s/AKfycbxti8tUxg6SJ_gzw7qM6l7ks8whF5APq0N-4i7ifVx5bRMUFsnS3aixwSKXh1o_yOGU/exec"; // 改成你的 Web App URL
+const nameInput = document.getElementById("nameInput");
+const searchBtn = document.getElementById("searchBtn");
+const resultDiv = document.getElementById("result");
+
+searchBtn.addEventListener("click", searchSeat);
+nameInput.addEventListener("keypress", function(e){
+  if(e.key === "Enter") searchSeat();
+});
+
 function searchSeat() {
-  const name = document.getElementById("nameInput").value.trim();
-  const result = document.getElementById("result");
-  if (!name) {
-    result.textContent = "請先輸入名字喔！";
+  const name = nameInput.value.trim();
+  if(!name){
+    resultDiv.textContent = "請輸入名字";
     return;
   }
-
-  result.textContent = "查詢中...";
-
-  const url = `https://script.google.com/macros/s/AKfycbwrYj6sLI-SOlLLYj-6a7Pn_FUuitVACyOIhhYmRDwjg7OKkHkovtuv_fcxg1-_2Q0lYg/exec?name=${encodeURIComponent(name)}`;
-
-  fetch(url)
+  resultDiv.textContent = "查詢中...";
+  
+  fetch(`${webAppUrl}?name=${encodeURIComponent(name)}`)
     .then(res => res.json())
     .then(data => {
-      if (data && data.seat) {
-        result.textContent = `${name} 的座位是：${data.seat}`;
-      } else {
-        result.textContent = "查不到此名字，請再試一次。";
+      resultDiv.innerHTML = ""; // 清空結果
+      if(data.seat){
+        resultDiv.textContent = `🎀 ${data.name} 的座位是 ${data.seat} 🎀`;
+      } else if(data.multiple){
+        resultDiv.textContent = "找到多位符合的賓客，請點選您的名字：";
+        data.multiple.forEach(item => {
+          const btn = document.createElement("button");
+          btn.className = "option-btn";
+          btn.textContent = item.name;
+          btn.addEventListener("click", ()=> {
+            resultDiv.textContent = `🎀 ${item.name} 的座位是 ${item.seat} 🎀`;
+          });
+          resultDiv.appendChild(btn);
+        });
+      } else if(data.error){
+        resultDiv.textContent = data.error;
       }
     })
-    .catch(() => {
-      result.textContent = "系統發生錯誤，請稍後再試。";
+    .catch(err=>{
+      console.error(err);
+      resultDiv.textContent = "查詢失敗，請稍後再試";
     });
 }
 </script>
