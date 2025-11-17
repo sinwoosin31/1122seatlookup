@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>座位查詢</title>
+<style>
+  body {
+    font-family: "Microsoft JhengHei", sans-serif;
+    background: #ffe4f2;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .container {
+    width: 90%;
+    max-width: 380px;
+    background: #ffffffee;
+    padding: 28px 26px;
+    border-radius: 22px;
+    box-shadow: 0 6px 20px rgba(255, 155, 200, 0.4);
+    text-align: center;
+    position: relative;
+  }
+  h2 {
+    color: #ff69b4;
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+  .cute-icon {
+    position: absolute;
+    width: 70px;
+    top: -35px;
+    right: -25px;
+    opacity: 0.9;
+  }
+  input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2px solid #ffb6d9;
+    border-radius: 12px;
+    outline: none;
+    margin-bottom: 16px;
+    background: #fff0f7;
+  }
+  button {
+    width: 100%;
+    padding: 12px;
+    background: #ff8ac6;
+    color: white;
+    font-size: 17px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  button:hover {
+    background: #ff6ab3;
+  }
+  .result {
+    margin-top: 18px;
+    font-size: 18px;
+    color: #d95d9c;
+    font-weight: bold;
+    min-height: 28px;
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <img class="cute-icon" src="https://i.imgur.com/LjF8E0y.png" alt="cute" />
+    <h2>座位查詢</h2>
+    <input id="nameInput" type="text" placeholder="請輸入您的名字" />
+    <button onclick="searchSeat()">查詢</button>
+    <div class="result" id="result"></div>
+  </div>
+
+<script>
+function searchSeat() {
+  const name = document.getElementById("nameInput").value.trim();
+  const result = document.getElementById("result");
+  if (!name) {
+    result.textContent = "請先輸入名字喔！";
+    return;
+  }
+
+  result.textContent = "查詢中...";
+
+  const url = `https://script.google.com/macros/s/AKfycbwrYj6sLI-SOlLLYj-6a7Pn_FUuitVACyOIhhYmRDwjg7OKkHkovtuv_fcxg1-_2Q0lYg/exec?name=${encodeURIComponent(name)}`;
+
+  fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      if (data && data.seat) {
+        result.textContent = `${name} 的座位是：${data.seat}`;
+      } else {
+        result.textContent = "查不到此名字，請再試一次。";
+      }
+    })
+    .catch(() => {
+      result.textContent = "系統發生錯誤，請稍後再試。";
+    });
+}
+</script>
+</body>
+</html>
