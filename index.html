@@ -16,7 +16,7 @@
     margin: 0;
     padding: 20px 15px;
     min-height: 100vh;
-    display: block;
+    display: flex;
     justify-content: center;
     align-items: flex-start;
     background: radial-gradient(circle at 20% 30%, #ffd6e9, transparent 60%),
@@ -28,7 +28,6 @@
   
   /* ===== 玻璃卡片 Container ===== */
   .container {
-    max-width: 500px; 
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(12px);
     padding: 25px 25px;
@@ -39,9 +38,6 @@
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.6);
     animation: fadeIn 1s ease;
-    margin: 20px auto 40px auto;
-    display: block; 
-    text-align: center;
   }
   
   /* ===== 標題 ===== */
@@ -160,105 +156,27 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
-  >
-    /* Header */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 20px;
-      background: #f8e1f4;
-    }
-    header .title {
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    header button {
-      padding: 5px 10px;
-      border: none;
-      border-radius: 5px;
-      background: #ff69b4;
-      color: white;
-      cursor: pointer;
-    }
 
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 10px 20px;
-      background: #f8e1f4;
-      font-size: 0.9rem;
-      color: #666;
-      position: relative;
-    }
-
-    /* Modal */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 100;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0,0,0,0.7);
-    }
-    .modal-content {
-      display: block;
-      margin: 50px auto;
-      max-width: 90%;
-      max-height: 80%;
-      border-radius: 10px;
-      touch-action: pan-x pan-y;
-      transform-origin: center center;
-      transition: transform 0.2s ease;
-    }
-    .close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      color: #fff;
-      font-size: 2rem;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    @media(max-width: 600px){
-      header { flex-direction: column; gap: 10px; }
-    }
 </style>
 </head>
+
 <body>
-  <header>
-    <div class="title">💍 Rui & Sheena Wedding 2025/11/22</div>
-    <button id="menuBtn">🍽 菜單</button>
-  </header>
-  <div class="container">
-    <h1>品睿♡瑜歆婚宴座位查詢</h1>
-    <h1>🎀</h1>
-  
-    <input type="text" id="nameInput" placeholder="請輸入名字">
-    <button id="searchBtn">查詢座位</button>
-  
-    <div class="result" id="result"></div>
-  
-    <!-- 座位圖（預先顯示） -->
-    <div id="imageWrapper">
-      <img id="seatMap" class="fade-in" src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
-    </div>
+<div class="container">
+  <h1>品睿♡瑜歆婚宴座位查詢</h1>
+  <h1>🎀</h1>
+
+  <input type="text" id="nameInput" placeholder="請輸入名字">
+  <button id="searchBtn">查詢座位</button>
+
+  <div class="result" id="result"></div>
+
+  <!-- 座位圖（預先顯示） -->
+  <div id="imageWrapper">
+    <img id="seatMap" class="fade-in" 
+         src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
   </div>
-  
-  <footer>
-    <p>© Rui & Sheena Wedding 20251122</p>
-    <p>❤️❤️❤️❤️</p>
-  </footer>
-  
- <!-- Modal -->
-  <div id="menuModal" class="modal">
-    <span class="close">&times;</span>
-    <img src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png" alt="婚禮菜單" class="modal-content">
-  </div>
+</div>
+
 
 <script>
   // ========= 基本設定 =========
@@ -409,54 +327,7 @@
       }
   }
 
-  // Modal 開關
-    const modal = document.getElementById("menuModal");
-    const btn = document.getElementById("menuBtn");
-    const span = document.querySelector(".close");
-    const menuImg = document.getElementById("menuImage");
-
-    btn.onclick = () => { 
-      modal.style.display = "block"; 
-      scale = 1;
-      menuImg.style.transform = `scale(${scale})`;
-    }
-    span.onclick = () => { modal.style.display = "none"; }
-    window.onclick = (event) => { if(event.target == modal){ modal.style.display = "none"; } }
-
-    // 簡單手勢縮放 (雙指縮放)
-    let scale = 1;
-    let startDistance = 0;
-
-    menuImg.addEventListener("touchstart", function(e){
-      if(e.touches.length === 2){
-        e.preventDefault();
-        startDistance = Math.hypot(
-          e.touches[0].pageX - e.touches[1].pageX,
-          e.touches[0].pageY - e.touches[1].pageY
-        );
-      }
-    }, { passive: false });
-
-    menuImg.addEventListener("touchmove", function(e){
-      if(e.touches.length === 2){
-        e.preventDefault();
-        const newDistance = Math.hypot(
-          e.touches[0].pageX - e.touches[1].pageX,
-          e.touches[0].pageY - e.touches[1].pageY
-        );
-        const newScale = scale * (newDistance / startDistance);
-        menuImg.style.transform = `scale(${newScale})`;
-      }
-    }, { passive: false });
-
-    menuImg.addEventListener("touchend", function(e){
-      if(e.touches.length < 2){
-        // 紀錄最後 scale
-        const transform = menuImg.style.transform;
-        const match = transform.match(/scale\(([\d\.]+)\)/);
-        if(match) scale = parseFloat(match[1]);
-      }
-    });
 </script>
+
 </body>
 </html>
