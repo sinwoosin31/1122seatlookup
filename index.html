@@ -203,7 +203,7 @@
       else if (len <= 1) masked = name;
       else if (len === 2) masked = name[0] + "*";
       else if (len === 3) masked = name[0] + "*" + name[len - 1];
-      else masked = name[0] + "*" + name[len - 1];
+      //else masked = name[0] + "***" + name[len - 1];
   
       maskCache[name] = masked;
       return masked;
