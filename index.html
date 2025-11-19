@@ -156,27 +156,101 @@
   @keyframes spin {
     to { transform: rotate(360deg); }
   }
+  >
+    /* Header */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background: #f8e1f4;
+    }
+    header .title {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+    header button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 5px;
+      background: #ff69b4;
+      color: white;
+      cursor: pointer;
+    }
 
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 10px 20px;
+      background: #f8e1f4;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.7);
+    }
+    .modal-content {
+      display: block;
+      margin: 50px auto;
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+    }
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      color: #fff;
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    @media(max-width: 600px){
+      header { flex-direction: column; gap: 10px; }
+    }
 </style>
 </head>
-
 <body>
-<div class="container">
-  <h1>品睿♡瑜歆婚宴座位查詢</h1>
-  <h1>🎀</h1>
-
-  <input type="text" id="nameInput" placeholder="請輸入名字">
-  <button id="searchBtn">查詢座位</button>
-
-  <div class="result" id="result"></div>
-
-  <!-- 座位圖（預先顯示） -->
-  <div id="imageWrapper">
-    <img id="seatMap" class="fade-in" 
-         src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
+  <header>
+    <div class="title">💍 Rui & Sheena Wedding 2025/11/22</div>
+    <button id="menuBtn">🍽 菜單</button>
+  </header>
+  <div class="container">
+    <h1>品睿♡瑜歆婚宴座位查詢</h1>
+    <h1>🎀</h1>
+  
+    <input type="text" id="nameInput" placeholder="請輸入名字">
+    <button id="searchBtn">查詢座位</button>
+  
+    <div class="result" id="result"></div>
+  
+    <!-- 座位圖（預先顯示） -->
+    <div id="imageWrapper">
+      <img id="seatMap" class="fade-in" src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
+    </div>
   </div>
-</div>
-
+  
+  <footer>
+    <p>© Rui & Sheena Wedding 20251122</p>
+    <p>❤️❤️❤️❤️</p>
+  </footer>
+  
+ <!-- Modal -->
+  <div id="menuModal" class="modal">
+    <span class="close">&times;</span>
+    <img src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png" alt="婚禮菜單" class="modal-content">
+  </div>
 
 <script>
   // ========= 基本設定 =========
@@ -327,7 +401,14 @@
       }
   }
 
-</script>
+  // Modal 功能
+    const modal = document.getElementById("menuModal");
+    const btn = document.getElementById("menuBtn");
+    const span = document.querySelector(".close");
 
+    btn.onclick = () => { modal.style.display = "block"; }
+    span.onclick = () => { modal.style.display = "none"; }
+    window.onclick = (event) => { if(event.target == modal){ modal.style.display = "none"; } }
+</script>
 </body>
 </html>
