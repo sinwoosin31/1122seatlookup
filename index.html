@@ -15,7 +15,7 @@
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0 15px;
-    padding-top: 60px;
+    padding-top: 60px; /* header 高度補償 */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -42,35 +42,25 @@
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid rgba(255, 170, 200, 0.35);
-    box-shadow: 0 4px 16px rgba(255, 150, 200, 0.25);
-  }
-  #headerBar .title {
-  font-size: 18px; /* 原 17px -> 18px */
-  font-weight: 700; /* 原 600 -> 700 */
-  color: #ff4fa0;
-  letter-spacing: 1px;
-  text-align: center;
-  text-shadow: 0 2px 8px rgba(255, 120, 180, 0.5); /* 加強陰影 */
-}
-  #menuBtn {
-    position: absolute;
-    left: 12px; /* 微調位置 */
-    background: linear-gradient(135deg,#ff9acb,#ff77a9); /* 漸層 */
-    border: none;
-    font-size: 20px; /* 原 24 -> 20，縮小 */
-    cursor: pointer;
-    color: white;
-    padding: 6px 10px;
-    border-radius: 50%; /* 圓形 */
-    box-shadow: 0 2px 6px rgba(255,120,180,0.45); /* 柔和陰影 */
-    transition: all 0.2s ease;
-  }
-  #menuBtn:active { 
-    transform: scale(0.92);
-    opacity: 0.8;
   }
   
-  /* ===== 玻璃卡片 Container ===== */
+  #headerBar .title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #ff4fa0;
+  }
+  #menuBtn {
+    position: absolute;
+    left: 12px;
+    background: #ff77a9; /* 簡單顏色 */
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+  
   .container {
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(12px);
@@ -82,8 +72,9 @@
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.6);
     animation: fadeIn 1s ease;
-    margin-top: 0;
+    margin-top: 10px; /* 回復原始補償 header 高度 */
   }
+
   
   /* ===== 標題 ===== */
   h1 {
