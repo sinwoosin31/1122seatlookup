@@ -164,30 +164,54 @@
     top: 0;
     left: 0;
     width: 100%;
+    height: 54px;
+    padding: 0 15px;
     z-index: 9999;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
-    padding: 10px 15px;
+  
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(12px);
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(255, 120, 180, 0.25);
-  }
   
+    border-bottom: 1px solid rgba(255, 170, 200, 0.35);
+    box-shadow: 0 4px 16px rgba(255, 150, 200, 0.25);
+  }
+  /* 標題置中 */
   #headerBar .title {
+    font-size: 17px;
+    font-weight: 600;
     color: #ff4fa0;
-    font-size: 18px;
-    font-weight: bold;
+    letter-spacing: 1px;
   }
   
+  /* 左上角小圖示按鈕（不破壞視覺） */
   #menuBtn {
-    background: #ff77b7;
+    position: absolute;
+    left: 15px;
+    background: none;
     border: none;
-    padding: 8px 14px;
-    border-radius: 8px;
-    color: white;
+    font-size: 24px;
     cursor: pointer;
-    box-shadow: 0 3px 8px rgba(255, 120, 180, 0.35);
+    color: #ff7dbb;
+    padding: 5px;
+  }
+  
+  /* 按下略微縮小效果 */
+  #menuBtn:active { 
+    transform: scale(0.92);
+    opacity: 0.8;
+  }
+  
+  /* ===== Footer ===== */
+  footer {
+    margin-top: 50px;
+    text-align: center;
+    padding: 18px 0 35px;
+    font-size: 14px;
+    color: #ff7dbb;
+  
+    opacity: 0.8;
   }
   
   /* ===== Popup ===== */
@@ -238,8 +262,8 @@
 <body>
   <!-- ===== Header ===== -->
   <div id="headerBar">
+    <button id="menuBtn">☰</button>
     <span class="title">婚宴資訊</span>
-    <button id="menuBtn">📜 菜單</button>
   </div>
   
   <!-- ===== 菜單 Popup ===== -->
@@ -265,7 +289,9 @@
            src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
     </div>
   </div>
-
+  <footer>
+    © 2025 品睿 ♡ 瑜歆 婚宴
+  </footer>
 
 <script>
   // ========= 基本設定 =========
