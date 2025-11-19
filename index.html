@@ -159,17 +159,18 @@
 
   /* ===== Header ===== */
   #headerBar {
-    position: sticky;
+    position: fixed;
     top: 0;
-    z-index: 999;
-    background: rgba(255, 255, 255, 0.75);
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(10px);
     padding: 10px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 0 0 12px 12px;
-    box-shadow: 0 3px 10px rgba(255, 120, 180, 0.2);
+    box-shadow: 0 2px 8px rgba(255, 120, 180, 0.25);
   }
   
   #headerBar .title {
@@ -178,19 +179,14 @@
     font-weight: bold;
   }
   
-  #headerBar #menuBtn {
+  #menuBtn {
     background: #ff77b7;
     border: none;
     padding: 8px 14px;
     border-radius: 8px;
     color: white;
     cursor: pointer;
-    font-size: 14px;
     box-shadow: 0 3px 8px rgba(255, 120, 180, 0.35);
-    transition: transform 0.15s;
-  }
-  #headerBar #menuBtn:hover {
-    transform: scale(1.05);
   }
   
   /* ===== Popup ===== */
@@ -201,7 +197,7 @@
     display: none;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
+    z-index: 20000;
   }
   
   #menuPopup .popup-content {
@@ -216,7 +212,6 @@
   
   #menuPopup img {
     width: 100%;
-    height: auto;
     border-radius: 10px;
   }
   
@@ -228,6 +223,11 @@
     color: white;
     border-radius: 8px;
     cursor: pointer;
+  }
+  
+  /* ===== 留空間避免 header 遮住內容 ===== */
+  .container {
+    margin-top: 60px;  /* header 高度補償 */
   }
 
 
