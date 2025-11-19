@@ -183,29 +183,26 @@
   const webAppUrl = "https://script.google.com/macros/s/AKfycbwt4lerkFrFEasl0XjpaiVo9OyKiKcGWMSB-VWiaBjHLhP67M6l3q6teo4YB8vOWPp1/exec";
   const nameInput = document.getElementById("nameInput");
   const resultDiv = document.getElementById("result");
-    
-  // ========= 快取設定 =========
+  const wrapper = document.getElementById("imageWrapper");
+  const img = document.getElementById("seatMap");
+
+  // ========= 快取 =========
   const cache = {};
   const maskCache = {};
   let debounceTimer;
-  
-  // ========= 預載座位圖 =========
-  const seatImg = new Image();
-  seatImg.src = "https://sinwoosin31.github.io/1122seatlookup/img/seat.png";
-  
-  // ========= 姓名隱碼 (快取) =========
+
+  // ========= 姓名隱碼 =========
   function maskNameCached(name) {
       if (maskCache[name]) return maskCache[name];
-  
+
       const len = name.length;
       let masked;
       if (name.includes("阿")) masked = name;
       else if (len <= 1) masked = name;
       else if (len === 2) masked = name[0] + "*";
       else if (len === 3) masked = name[0] + "*" + name[len - 1];
-      //else masked = name[0] + "***" + name[len - 1];
-      else if (len > 3) masked = name;
-    
+      else masked = name;
+
       maskCache[name] = masked;
       return masked;
   }
@@ -231,32 +228,32 @@
       }
   }
 
-  // ========= 查詢座位（快取 + 防抖） =========
+  // ========= 查詢 =========
   function searchSeat() {
       clearTimeout(debounceTimer);
       debounceTimer = setTimeout(() => {
           const name = nameInput.value.trim();
           if (!name) return resultDiv.textContent = "請輸入名字";
 
-          // ==== 清快取判斷 ====
+          // ==== 清快取 ====
           if (name.toUpperCase() === "清快取") {
               fetch(`${webAppUrl}?name=清快取`)
                   .then(res => res.json())
                   .then(data => {
                       resultDiv.textContent = data.success || "快取已清除";
-                      Object.keys(cache).forEach(k => delete cache[k]); // 清前端快取
+                      Object.keys(cache).forEach(k => delete cache[k]);
                   })
                   .catch(() => {
                       resultDiv.textContent = "清快取失敗，請稍後再試";
                   });
-              return; // 結束函式，不做其他查詢
+              return;
           }
-  
+
           if (cache[name]) {
               renderResult(cache[name]);
               return;
           }
-  
+
           resultDiv.textContent = "查詢中...";
           fetch(`${webAppUrl}?name=${encodeURIComponent(name)}`)
               .then(res => res.json())
@@ -267,22 +264,22 @@
               .catch(() => {
                   resultDiv.textContent = "查詢失敗，請稍後再試";
               });
-      }, 250); // 250ms 防抖
+
+      }, 250);
   }
 
-  // ========= 事件綁定 =========
   document.getElementById("searchBtn").addEventListener("click", searchSeat);
   nameInput.addEventListener("keypress", e => { if(e.key === "Enter") searchSeat(); });
 
-  // ========= 座位圖縮放與拖曳 =========
-  const img = document.getElementById("seatMap");
+  // ========= iOS 修正版拖曳縮放 =========
+
   let scale = 1, lastScale = 1;
   let posX = 0, posY = 0;
   let lastX = 0, lastY = 0;
   let startDistance = 0;
   let ticking = false;
 
-  img.addEventListener("touchstart", (e) => {
+  wrapper.addEventListener("touchstart", (e) => {
       if (e.touches.length === 2) {
           startDistance = getDistance(e.touches[0], e.touches[1]);
       } else if (e.touches.length === 1) {
@@ -290,31 +287,44 @@
           lastY = e.touches[0].clientY - posY;
       }
   }, { passive: false });
-  
-  img.addEventListener("touchmove", (e) => {
-      e.preventDefault();
-  
+
+  wrapper.addEventListener("touchmove", (e) => {
+      if (scale > 1) e.preventDefault();   // iOS 安全：僅限放大時阻止預設
+      else return;                         // 未放大時避免白畫面
+
       if (e.touches.length === 2) {
           const newDist = getDistance(e.touches[0], e.touches[1]);
           scale = Math.min(Math.max(lastScale * (newDist / startDistance), 1), 3);
           requestUpdate();
       }
-  
+
       if (e.touches.length === 1 && scale > 1) {
           posX = e.touches[0].clientX - lastX;
           posY = e.touches[0].clientY - lastY;
           requestUpdate();
       }
   }, { passive: false });
-  
-  img.addEventListener("touchend", () => {
+
+  wrapper.addEventListener("touchend", () => {
       lastScale = scale;
-  }, { passive: false });
-  
+
+      // 防止拖出畫面造成白區塊
+      clampPosition();
+      requestUpdate();
+  });
+
   function getDistance(a, b) {
       return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
   }
-  
+
+  function clampPosition() {
+      const maxX = (img.clientWidth * scale - wrapper.clientWidth) / 2;
+      const maxY = (img.clientHeight * scale - wrapper.clientHeight) / 2;
+
+      posX = Math.min(Math.max(posX, -maxX), maxX);
+      posY = Math.min(Math.max(posY, -maxY), maxY);
+  }
+
   function requestUpdate() {
       if (!ticking) {
           requestAnimationFrame(() => {
@@ -324,8 +334,8 @@
           ticking = true;
       }
   }
-
 </script>
+
 
 </body>
 </html>
