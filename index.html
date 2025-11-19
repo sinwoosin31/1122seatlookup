@@ -16,7 +16,7 @@
     margin: 0;
     padding: 20px 15px;
     min-height: 100vh;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: flex-start;
     background: radial-gradient(circle at 20% 30%, #ffd6e9, transparent 60%),
@@ -28,6 +28,7 @@
   
   /* ===== 玻璃卡片 Container ===== */
   .container {
+    max-width: 500px; 
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(12px);
     padding: 25px 25px;
@@ -38,6 +39,9 @@
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.6);
     animation: fadeIn 1s ease;
+    margin: 20px auto 40px auto;
+    display: block; 
+    text-align: center;
   }
   
   /* ===== 標題 ===== */
@@ -185,6 +189,7 @@
       background: #f8e1f4;
       font-size: 0.9rem;
       color: #666;
+      position: relative;
     }
 
     /* Modal */
