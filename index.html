@@ -205,6 +205,9 @@
       max-width: 90%;
       max-height: 80%;
       border-radius: 10px;
+      touch-action: pan-x pan-y;
+      transform-origin: center center;
+      transition: transform 0.2s ease;
     }
     .close {
       position: absolute;
@@ -401,14 +404,54 @@
       }
   }
 
-  // Modal 功能
+  // Modal 開關
     const modal = document.getElementById("menuModal");
     const btn = document.getElementById("menuBtn");
     const span = document.querySelector(".close");
+    const menuImg = document.getElementById("menuImage");
 
-    btn.onclick = () => { modal.style.display = "block"; }
+    btn.onclick = () => { 
+      modal.style.display = "block"; 
+      scale = 1;
+      menuImg.style.transform = `scale(${scale})`;
+    }
     span.onclick = () => { modal.style.display = "none"; }
     window.onclick = (event) => { if(event.target == modal){ modal.style.display = "none"; } }
+
+    // 簡單手勢縮放 (雙指縮放)
+    let scale = 1;
+    let startDistance = 0;
+
+    menuImg.addEventListener("touchstart", function(e){
+      if(e.touches.length === 2){
+        e.preventDefault();
+        startDistance = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+      }
+    }, { passive: false });
+
+    menuImg.addEventListener("touchmove", function(e){
+      if(e.touches.length === 2){
+        e.preventDefault();
+        const newDistance = Math.hypot(
+          e.touches[0].pageX - e.touches[1].pageX,
+          e.touches[0].pageY - e.touches[1].pageY
+        );
+        const newScale = scale * (newDistance / startDistance);
+        menuImg.style.transform = `scale(${newScale})`;
+      }
+    }, { passive: false });
+
+    menuImg.addEventListener("touchend", function(e){
+      if(e.touches.length < 2){
+        // 紀錄最後 scale
+        const transform = menuImg.style.transform;
+        const match = transform.match(/scale\(([\d\.]+)\)/);
+        if(match) scale = parseFloat(match[1]);
+      }
+    });
 </script>
 </body>
 </html>
