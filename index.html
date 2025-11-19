@@ -157,25 +157,113 @@
     to { transform: rotate(360deg); }
   }
 
+  /* ===== Header ===== */
+  #headerBar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 3px 10px rgba(255, 120, 180, 0.2);
+  }
+  
+  #headerBar .title {
+    color: #ff4fa0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  #headerBar #menuBtn {
+    background: #ff77b7;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    box-shadow: 0 3px 8px rgba(255, 120, 180, 0.35);
+    transition: transform 0.15s;
+  }
+  #headerBar #menuBtn:hover {
+    transform: scale(1.05);
+  }
+  
+  /* ===== Popup ===== */
+  #menuPopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+  }
+  
+  #menuPopup .popup-content {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    text-align: center;
+  }
+  
+  #menuPopup img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  #closePopup {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border: none;
+    background: #ff77b7;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+
 </style>
 </head>
 
 <body>
-<div class="container">
-  <h1>品睿♡瑜歆婚宴座位查詢</h1>
-  <h1>🎀</h1>
-
-  <input type="text" id="nameInput" placeholder="請輸入名字">
-  <button id="searchBtn">查詢座位</button>
-
-  <div class="result" id="result"></div>
-
-  <!-- 座位圖（預先顯示） -->
-  <div id="imageWrapper">
-    <img id="seatMap" class="fade-in" 
-         src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
+  <!-- ===== Header ===== -->
+  <div id="headerBar">
+    <span class="title">婚宴資訊</span>
+    <button id="menuBtn">📜 菜單</button>
   </div>
-</div>
+  
+  <!-- ===== 菜單 Popup ===== -->
+  <div id="menuPopup">
+    <div class="popup-content">
+      <img src="./img/seatnocode.png" alt="婚宴菜單">
+      <button id="closePopup">關閉</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>品睿♡瑜歆婚宴座位查詢</h1>
+    <h1>🎀</h1>
+  
+    <input type="text" id="nameInput" placeholder="請輸入名字">
+    <button id="searchBtn">查詢座位</button>
+  
+    <div class="result" id="result"></div>
+  
+    <!-- 座位圖（預先顯示） -->
+    <div id="imageWrapper">
+      <img id="seatMap" class="fade-in" 
+           src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
+    </div>
+  </div>
 
 
 <script>
@@ -334,6 +422,21 @@
           ticking = true;
       }
   }
+  
+  // ===== Popup 開關控制 =====
+  document.getElementById("menuBtn").onclick = function () {
+    document.getElementById("menuPopup").style.display = "flex";
+  };
+  
+  document.getElementById("closePopup").onclick = function () {
+    document.getElementById("menuPopup").style.display = "none";
+  };
+  
+  // 點 popup 背景也會關閉
+  document.getElementById("menuPopup").onclick = function (e) {
+    if (e.target === this) this.style.display = "none";
+  };
+
 </script>
 
 
