@@ -271,8 +271,8 @@
   }
 
   // ========= 事件綁定 =========
-  //document.getElementById("searchBtn").addEventListener("click", searchSeat);
-  //nameInput.addEventListener("keypress", e => { if(e.key === "Enter") searchSeat(); });
+  document.getElementById("searchBtn").addEventListener("click", searchSeat);
+  nameInput.addEventListener("keypress", e => { if(e.key === "Enter") searchSeat(); });
 
   // ========= 座位圖縮放與拖曳 =========
   const img = document.getElementById("seatMap");
@@ -281,8 +281,6 @@
   let lastX = 0, lastY = 0;
   let startDistance = 0;
   let ticking = false;
-
-  img.style.willChange = "transform";
 
   img.addEventListener("touchstart", (e) => {
       if (e.touches.length === 2) {
@@ -311,7 +309,7 @@
   
   img.addEventListener("touchend", () => {
       lastScale = scale;
-  });
+  }, { passive: false });
   
   function getDistance(a, b) {
       return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY);
