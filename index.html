@@ -237,6 +237,20 @@
       debounceTimer = setTimeout(() => {
           const name = nameInput.value.trim();
           if (!name) return resultDiv.textContent = "請輸入名字";
+
+          // ==== 清快取判斷 ====
+          if (name.toUpperCase() === "清快取") {
+              fetch(`${webAppUrl}?name=清快取`)
+                  .then(res => res.json())
+                  .then(data => {
+                      resultDiv.textContent = data.success || "快取已清除";
+                      Object.keys(cache).forEach(k => delete cache[k]); // 清前端快取
+                  })
+                  .catch(() => {
+                      resultDiv.textContent = "清快取失敗，請稍後再試";
+                  });
+              return; // 結束函式，不做其他查詢
+          }
   
           if (cache[name]) {
               renderResult(cache[name]);
