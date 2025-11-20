@@ -469,40 +469,43 @@ footer {
       }
   }
   
-  // ===== Popup 開關控制 =====
-  document.getElementById("menuBtn").onclick = function () {
-    document.getElementById("menuPopup").style.display = "flex";
-    document.body.classList.add("menu-open"); 
-};
-  
-document.getElementById("closePopup").onclick = function () {
-    document.getElementById("menuPopup").style.display = "none";
-    document.body.classList.remove("menu-open");
-};
-
-document.getElementById("menuPopup").onclick = function (e) {
-    if (e.target === this) {
-        document.getElementById("menuPopup").style.display = "none";
-        document.body.classList.remove("menu-open");
-    }
-};
-
-
-  // 點 popup 背景也會關閉
-  document.getElementById("menuPopup").onclick = function (e) {
-    if (e.target === this) this.style.display = "none";
-  };
-
+    // ===== Popup 開關控制 =====
     const menuBtn = document.getElementById("menuBtn");
-const menuPopup = document.getElementById("menuPopup");
+    const menuPopup = document.getElementById("menuPopup");
+    
+    // 建立一個 close 按鈕
+    const closePopup = document.createElement("button");
+    closePopup.id = "closePopup";
+    closePopup.textContent = "關閉";
+    closePopup.style.marginTop = "10px";
+    closePopup.style.padding = "8px 14px";
+    closePopup.style.border = "none";
+    closePopup.style.background = "#ff77b7";
+    closePopup.style.color = "white";
+    closePopup.style.borderRadius = "8px";
+    closePopup.style.cursor = "pointer";
+    menuPopup.appendChild(closePopup);
+    
+    // 點按鈕開啟
+    menuBtn.addEventListener("click", () => {
+        menuPopup.style.display = "flex";
+        document.body.classList.add("menu-open");
+    });
+    
+    // 點關閉按鈕關閉
+    closePopup.addEventListener("click", () => {
+        menuPopup.style.display = "none";
+        document.body.classList.remove("menu-open");
+    });
+    
+    // 點背景關閉
+    menuPopup.addEventListener("click", (e) => {
+        if (e.target === menuPopup) {
+            menuPopup.style.display = "none";
+            document.body.classList.remove("menu-open");
+        }
+    });
 
-menuBtn.addEventListener("click", () => {
-  menuPopup.style.display = "flex";
-});
-
-menuPopup.addEventListener("click", () => {
-  menuPopup.style.display = "none";
-});
 
 </script>
 
