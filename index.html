@@ -64,7 +64,12 @@ body.menu-open {
     right: 20px;
     z-index: 9999;
 }
-
+.menu-btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: bounce 2s infinite;
+}
 .menu-wrapper #menuBtn {
     width: 60px;
     height: 60px;
@@ -90,27 +95,27 @@ body.menu-open {
     text-align: center;
 }
 
+.menu-label {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #d85b88;
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    text-align: center;
+    pointer-events: none;
+}
+    
 #menuBtn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px; 
     width: 60px;
     height: 60px;
     border-radius: 50%;
     border: none;
     background: #ff9bbd;
-    color: white;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     transition: transform 0.2s ease, background 0.2s ease;
-    display: flex;        
-    flex-direction: column;   
-    justify-content: center; 
-    align-items: center;    
-    padding: 0;              
-    line-height: 1;      
-    animation: bounce 2s infinite;
-    z-index: 9999; 
 }
 #menuBtn:hover {
     background: #ff7bab;
@@ -119,7 +124,6 @@ body.menu-open {
 #menuBtn img {
     width: 40px;
     height: 40px;
-    display: block;
     pointer-events: none;
 }
 #menuBtn .menu-label {
@@ -341,7 +345,9 @@ footer {
 /* ===== 手機版 ===== */
 @media (max-width: 600px) {
     #headerBar .title { font-size: 16px; padding: 0 40px; display: inline-block; }
-    #menuBtn { width: 50px; height: 50px; font-size: 12px; }
+    #menuBtn { width: 50px; height: 50px; }
+    #menuBtn img { width: 30px; height: 30px; }
+    .menu-label { font-size: 12px; }
     .container h1 {
         font-size: 22px; 
     }
@@ -374,10 +380,12 @@ footer {
     </div>
   </div>
 <div class="menu-wrapper">
-  <button id="menuBtn">
-    <img src="./img/menu-icon.png" alt="選單">
+  <div class="menu-btn-wrapper">
+    <button id="menuBtn">
+      <img src="./img/menu-icon.png" alt="選單">
+    </button>
     <span class="menu-label">菜單</span>
-  </button>
+  </div>
 </div>
     <!-- ===== Footer ===== -->
     <footer id="footerBar">
