@@ -647,15 +647,17 @@ footer {
     // ========= marker =========
     function getHeartPosition(seat) {
         const pos = tablePositions[seat];
-        const imgWidth  = img.clientWidth;
-        const imgHeight = img.clientHeight;
-    
-        // 圖片左上角位置
-        const imgLeft = (wrapper.clientWidth - imgWidth * scale) / 2 + pos.x;
-        const imgTop  = (wrapper.clientHeight - imgHeight * scale) / 2 + pos.y;
+        if(!pos) return {x:0, y:0};
     
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
+    
+        const imgWidth  = img.clientWidth;
+        const imgHeight = img.clientHeight;
+    
+        // 圖片左上角相對 wrapper 的位置
+        const imgLeft = (wrapper.clientWidth - imgWidth * scale) / 2 + posX;
+        const imgTop  = (wrapper.clientHeight - imgHeight * scale) / 2 + posY;
     
         const x = imgLeft + percentX * imgWidth * scale;
         const y = imgTop  + percentY * imgHeight * scale;
@@ -663,6 +665,7 @@ footer {
         return { x, y };
     }
     function showHeart(seat) {
+        if(!tablePositions[seat]) return;
         heart.dataset.seat = seat;
         const { x, y } = getHeartPosition(seat);
         heart.style.left = x + "px";
