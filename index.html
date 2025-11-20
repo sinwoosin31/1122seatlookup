@@ -645,22 +645,25 @@ footer {
     };
         
     // ========= marker =========
-    function showHeart(seat) {
+    function getHeartPosition(seat) {
         const pos = tablePositions[seat];
-        if (!pos) return;
+        const imgWidth  = img.clientWidth;
+        const imgHeight = img.clientHeight;
     
-        heart.dataset.seat = seat;
-    
-        // 圖片左上角真實座標
-        const imgLeft = wrapper.clientWidth/2 - (img.clientWidth*scale)/2 + posX;
-        const imgTop  = wrapper.clientHeight/2 - (img.clientHeight*scale)/2 + posY;
+        // 圖片左上角位置
+        const imgLeft = (wrapper.clientWidth - imgWidth * scale) / 2 + posX;
+        const imgTop  = (wrapper.clientHeight - imgHeight * scale) / 2 + posY;
     
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        const x = imgLeft + percentX * img.clientWidth * scale;
-        const y = imgTop  + percentY * img.clientHeight * scale;
+        const x = imgLeft + percentX * imgWidth * scale;
+        const y = imgTop  + percentY * imgHeight * scale;
     
+        return { x, y };
+    }
+    function showHeart(seat) {
+        const { x, y } = getHeartPosition(seat);
         heart.style.left = x + "px";
         heart.style.top  = y + "px";
         heart.style.display = "block";
@@ -672,20 +675,8 @@ footer {
     }
     
     function updateHeart() {
-        const seat = heart.dataset.seat;
-        if (!seat) return;
-    
-        const pos = tablePositions[seat];
-    
-        const imgLeft = wrapper.clientWidth/2 - (img.clientWidth*scale)/2 + posX;
-        const imgTop  = wrapper.clientHeight/2 - (img.clientHeight*scale)/2 + posY;
-    
-        const percentX = pos.x / img.naturalWidth;
-        const percentY = pos.y / img.naturalHeight;
-    
-        const x = imgLeft + percentX * img.clientWidth * scale;
-        const y = imgTop  + percentY * img.clientHeight * scale;
-    
+        if (!heart.dataset.seat) return;
+        const { x, y } = getHeartPosition(heart.dataset.seat);
         heart.style.left = x + "px";
         heart.style.top  = y + "px";
     }
