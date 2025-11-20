@@ -644,12 +644,17 @@ footer {
     function showHeart(seat) {
         const pos = tablePositions[seat];
 
-        // 相對 wrapper 計算
-        const scaleX = img.width / img.naturalWidth;
-        const scaleY = img.height / img.naturalHeight;
+        // 取得圖片原始大小縮放比例
+        const scaleFactor = scale; 
+        const imgRect = img.getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
     
-        heart.style.left = (pos.x * scaleX) + "px";
-        heart.style.top = (pos.y * scaleY) + "px";
+        // 計算 marker 的最終座標
+        const x = pos.x * (img.width / img.naturalWidth) * scaleFactor + posX + wrapperRect.left;
+        const y = pos.y * (img.height / img.naturalHeight) * scaleFactor + posY + wrapperRect.top;
+    
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
         heart.style.display = "block";
     }
     
