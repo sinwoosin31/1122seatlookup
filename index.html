@@ -386,14 +386,44 @@ footer {
     left: 0;
     font-size: 32px;
     transform: translate(-50%, -50%);
-    display: none; /* 預設隱藏 */
+    display: none;
     z-index: 2000;
     animation: floatGlow 2s ease-in-out infinite;
+    background: linear-gradient(45deg, #ff77b7, #ffb6c1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 @keyframes floatGlow {
-    0%   { transform: translate(-50%, -50%) translateY(0); text-shadow: 0 0 5px #ff77b7; }
-    50%  { transform: translate(-50%, -50%) translateY(-8px); text-shadow: 0 0 15px #ff77b7; }
-    100% { transform: translate(-50%, -50%) translateY(0); text-shadow: 0 0 5px #ff77b7; }
+    0% {
+        transform: translate(-50%, -50%) translateY(0) scale(1);
+        text-shadow: 0 0 5px #ff77b7;
+        color: #ff77b7;
+    }
+    25% {
+        transform: translate(-50%, -50%) translateY(-4px) scale(1.1);
+        text-shadow: 0 0 10px #ff77b7, 0 0 20px #ffb6c1;
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-8px) scale(1.2);
+        text-shadow: 0 0 15px #ff77b7, 0 0 30px #ffb6c1;
+        color: #ff4fa0;
+    }
+    75% {
+        transform: translate(-50%, -50%) translateY(-4px) scale(1.1);
+        text-shadow: 0 0 10px #ff77b7, 0 0 20px #ffb6c1;
+    }
+    100% {
+        transform: translate(-50%, -50%) translateY(0) scale(1);
+        text-shadow: 0 0 5px #ff77b7;
+        color: #ff77b7;
+    }
+}
+@keyframes floatSwing {
+    0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+    25% { transform: translate(-50%, -50%) rotate(-10deg) scale(1.1); }
+    50% { transform: translate(-50%, -50%) rotate(10deg) scale(1.2); }
+    75% { transform: translate(-50%, -50%) rotate(-10deg) scale(1.1); }
+    100% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
 }
 </style>
 </head>
