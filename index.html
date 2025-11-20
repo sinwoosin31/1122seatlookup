@@ -11,91 +11,263 @@
 
 <style>
     /* ===== 全局 ===== */
-  /* ===== 全局 ===== */
-body {
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-  padding-top: 70px; /* header 保留空間 */
-  background: radial-gradient(circle at 20% 30%, #ffd6e9, transparent 60%),
-              radial-gradient(circle at 80% 70%, #ffe4f2, transparent 60%),
-              #ffeef8;
-  color: #333;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0 15px;
+    padding-top: 60px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: radial-gradient(circle at 20% 30%, #ffd6e9, transparent 60%),
+                radial-gradient(circle at 80% 70%, #ffe4f2, transparent 60%),
+                #ffeef8;
+    color: #333;
+    overflow-x: hidden;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-/* ===== Header ===== */
-#headerBar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  padding: 0 20px;
-  z-index: 9999;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(14px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-bottom: 1px solid rgba(255, 170, 200, 0.35);
-}
+  /* ===== Header ===== */
+  #headerBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 54px;
+    padding: 0 15px;
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(14px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 170, 200, 0.35);
+    box-shadow: 0 4px 16px rgba(255, 150, 200, 0.2);
+  }
+  #headerBar .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ff4fa0;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(255, 120, 180, 0.5);
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  #menuBtn {
+    position: absolute;
+    left: 12px;
+    background: linear-gradient(135deg,#ff9acb,#ff77a9);
+    border: none;
+    cursor: pointer;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(255,120,180,0.45);
+    transition: all 0.2s ease;
+  }
+  #menuBtn:active { 
+    transform: scale(0.92);
+    opacity: 0.8;
+  }
 
-#headerBar .title {
-  font-size: 18px;
-  font-weight: 700;
-  color: #ff4fa0;
-  letter-spacing: 1px;
-  text-align: center;
-}
+  /* ===== Container 卡片 ===== */
+  .container {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(14px);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    border: 1px solid rgba(255, 192, 203, 0.5);
+    animation: fadeIn 1s ease;
+    margin-top: 10px;
+    position: relative;
+    margin-top: 70px;
+    flex: 1 0 auto;
+  }
+  /* 卡片裝飾小愛心 */
+  .container::after {
+    content: '♡';
+    position: absolute;
+    top: -12px;
+    right: 16px;
+    font-size: 20px;
+    color: rgba(255,105,180,0.6);
+    animation: heartbeat 1.5s infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    25%, 75% { transform: scale(1.2); }
+    50% { transform: scale(1.1); }
+  }
 
-#menuBtn {
-  position: absolute;
-  left: 14px;
-  background: linear-gradient(135deg,#ff9acb,#ff77a9);
-  border: none;
-  cursor: pointer;
-  color: white;
-  padding: 6px 10px;
-  border-radius: 50%;
-}
+  /* ===== 標題 ===== */
+  h1 {
+    color: #ff5fa2;
+    font-size: 22px;
+    margin: 8px 0;
+    text-shadow: 0 2px 6px rgba(255, 150, 200, 0.4);
+  }
 
-/* ===== Container ===== */
-.container {
-  background: rgba(255, 255, 255, 0.45);
-  backdrop-filter: blur(14px);
-  padding: 25px;
-  border-radius: 20px;
-  width: 100%;
-  max-width: 420px;
-  margin: 20px auto 0 auto;
-  text-align: center;
-  border: 1px solid rgba(255, 192, 203, 0.5);
-  box-sizing: border-box;
-  position: relative; /* ⭐ 讓 ::after 正確定位 */
-}
+  /* ===== 輸入框 ===== */
+  input[type="text"] {
+    width: 82%;
+    padding: 12px 15px;
+    border-radius: 12px;
+    border: 2px solid #ffceeb;
+    background: #fff8fc;
+    font-size: 16px;
+    margin-bottom: 15px;
+    box-shadow: inset 0 0 8px rgba(255, 150, 200, 0.2);
+    transition: all 0.2s ease;
+  }
+  input[type="text"]:focus {
+    border-color: #ff69b4;
+    box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
+    outline: none;
+  }
 
-.container::after {
-  content: '♡';
-  position: absolute;
-  top: -10px;
-  right: 16px;
-  font-size: 20px;
-  color: rgba(255,105,180,0.6);
-}
+  /* ===== 按鈕 ===== */
+  button {
+    background: linear-gradient(135deg, #ff9acb, #ff77a9);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 90%;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(255, 120, 180, 0.4);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(255, 120, 180, 0.55);
+  }
+  .option-btn {
+    display: block;
+    margin: 6px auto;
+    background: linear-gradient(135deg, #ffb3cc, #ff8cb4);
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    width: 80%;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(255, 100, 180, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .option-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(255, 100, 180, 0.45);
+  }
 
-/* ===== Footer ===== */
-footer {
-  width: 100%;
-  max-width: 420px;
-  margin: 40px auto 20px auto;
-  text-align: center;
-  font-size: 14px;
-  opacity: 0.7;
-}
+  /* ===== 座位圖 ===== */
+  #imageWrapper {
+    width: 100%;
+    overflow: hidden;
+    border-radius: 16px;
+    margin-top: 15px;
+    touch-action: none;
+    box-shadow: 0 6px 18px rgba(255, 120, 180, 0.35);
+  }
+  #seatMap {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    transform-origin: center center;
+    transition: opacity 0.6s, transform 0.3s;
+    opacity: 1;
+  }
 
+  /* ===== 結果區 ===== */
+  .result {
+    font-size: 18px;
+    margin-top: 15px;
+    color: #ff4fa0;
+    text-shadow: 0 2px 6px rgba(255, 150, 200, 0.6);
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    width: 100%;
+    max-width: 420px;
+    margin: 30px auto 50px;
+    text-align: center;
+    font-size: 14px;
+    background: linear-gradient(120deg, #ffd6e9, #ffe4f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.8;
+    margin-top: auto;
+  }
+
+  /* ===== Popup ===== */
+  #menuPopup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 20000;
+  }
+  #menuPopup .popup-content {
+    background: linear-gradient(145deg, #fff0f5, #ffe4f2);
+    border-radius: 16px;
+    padding: 15px;
+    max-width: 90%;
+    max-height: 90%;
+    overflow: auto;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(255,105,180,0.25);
+    animation: fadeIn 0.4s ease-out;
+  }
+  #menuPopup img {
+    width: 100%;
+    border-radius: 12px;
+  }
+  #closePopup {
+    margin-top: 10px;
+    padding: 8px 14px;
+    border: none;
+    background: #ff77b7;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+
+  /* ===== 淡入動畫 ===== */
+  .fade-in {
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ===== Loading ===== */
+  .loading {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #ffb6c1;
+    border-top-color: #ff69b4;
+    border-radius: 50%;
+    margin: 15px auto;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
 </style>
 </head>
 
