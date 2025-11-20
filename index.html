@@ -651,14 +651,18 @@ footer {
     
         heart.dataset.seat = seat;
     
+        // 圖片左上角真實座標
+        const imgLeft = wrapper.clientWidth/2 - (img.clientWidth*scale)/2 + posX;
+        const imgTop  = wrapper.clientHeight/2 - (img.clientHeight*scale)/2 + posY;
+    
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        const x = percentX * img.clientWidth * scale + posX;
-        const y = percentY * img.clientHeight * scale + posY;
+        const x = imgLeft + percentX * img.clientWidth * scale;
+        const y = imgTop  + percentY * img.clientHeight * scale;
     
         heart.style.left = x + "px";
-        heart.style.top = y + "px";
+        heart.style.top  = y + "px";
         heart.style.display = "block";
     }
     
@@ -672,14 +676,18 @@ footer {
         if (!seat) return;
     
         const pos = tablePositions[seat];
+    
+        const imgLeft = wrapper.clientWidth/2 - (img.clientWidth*scale)/2 + posX;
+        const imgTop  = wrapper.clientHeight/2 - (img.clientHeight*scale)/2 + posY;
+    
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        const x = percentX * img.clientWidth * scale + posX;
-        const y = percentY * img.clientHeight * scale + posY;
+        const x = imgLeft + percentX * img.clientWidth * scale;
+        const y = imgTop  + percentY * img.clientHeight * scale;
     
         heart.style.left = x + "px";
-        heart.style.top = y + "px";
+        heart.style.top  = y + "px";
     }
 
 </script>
