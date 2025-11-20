@@ -648,19 +648,24 @@ footer {
         const pos = tablePositions[seat];
         heart.dataset.seat = seat;
     
-        const imgRect = img.getBoundingClientRect();
-        const wrapperRect = wrapper.getBoundingClientRect();
+        const imgWidth = img.clientWidth;
+        const imgHeight = img.clientHeight;
     
-        // 座位百分比
+        // 座位在圖片上的比例
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        // 實際位置 = wrapper內圖片位置 + transform平移
-        const x = img.clientWidth * percentX + posX;
-        const y = img.clientHeight * percentY + posY;
+        // 轉換到實際大小
+        const x = percentX * imgWidth;
+        const y = percentY * imgHeight;
     
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
+        // 加上 transform translate
+        const centerOffsetX = imgWidth / 2;
+        const centerOffsetY = imgHeight / 2;
+    
+        heart.style.left = x - centerOffsetX + posX + "px";
+        heart.style.top = y - centerOffsetY + posY + "px";
+    
         heart.style.display = "block";
     }
     
