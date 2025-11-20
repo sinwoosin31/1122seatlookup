@@ -483,12 +483,12 @@ footer {
               btn.textContent = maskNameCached(item.name);
               btn.onclick = () => {
                   resultDiv.innerHTML = `🎀 ${item.name} 的座位是 ${item.seat} 🎀<br>`;
+                  if (tablePositions[item.seat]) {
+                        showHeart(item.seat);
+                    } else {
+                        hideHeart();
+                    }
               };
-              if(tablePositions[data.seat]) {
-                showHeart(data.seat);
-              }else {
-                    hideHeart();
-                }
               resultDiv.appendChild(btn);
           });
       } else {
