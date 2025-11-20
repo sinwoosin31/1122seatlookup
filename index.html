@@ -14,8 +14,7 @@
   body {
     font-family: 'Arial', sans-serif;
     margin: 0;
-    padding: 0 15px;
-    padding-top: 60px;
+    padding: 60px 0 0 0; /* 去掉左右 padding */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -25,7 +24,6 @@
                 #ffeef8;
     color: #333;
     overflow-x: hidden;
-    min-height: 100vh;
   }
 
   /* ===== Header 外觀 ===== */
@@ -97,21 +95,18 @@
 
   /* ===== Container 卡片 ===== */
   .container {
-    background: rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(14px);
-    padding: 25px 20px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
-    width: 100%;
+    width: 90%;         /* 手機版寬度 90%，自動縮小 */
     max-width: 420px;
-    margin: 20px auto;      /* 水平置中 + 上下間距 */
-    text-align: center;      /* 內部文字與 inline 元素置中 */
-    border: 1px solid rgba(255, 192, 203, 0.5);
-    position: relative;
+    margin: 0 auto 20px; /* 上下間距 + 水平置中 */
+    text-align: center;
+    padding: 25px 15px; /* 保留內邊距 */
+    border-radius: 20px;
+    background: rgba(255,255,255,0.45);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
     display: flex;
     flex-direction: column;
-    align-items: center;     /* 垂直排列 + 水平置中 */
-    flex: 1 0 auto;
+    align-items: center;
   }
   /* 卡片裝飾小愛心 */
   .container::after {
@@ -156,10 +151,10 @@
   }
     input[type="text"],
 button#searchBtn {
-    width: 90%;             /* 統一百分比寬度 */
-    max-width: 350px;       /* 手機上不要太寬 */
-    margin: 10px auto;      /* 水平置中 + 上下間距 */
-    display: block;         /* 百分比寬度有效 */
+    width: 100%;      /* 直接填滿 container */
+    max-width: 350px; /* 限制最大寬度 */
+    margin: 10px 0;   /* 上下間距，水平置中 */
+    display: block;
 }
 
   /* ===== 按鈕 ===== */
@@ -202,7 +197,7 @@ button#searchBtn {
   #imageWrapper {
     width: 100%;
     max-width: 400px;
-    margin: 15px auto 0;   /* 水平置中 */
+    margin: 15px auto 0;
     border-radius: 16px;
     overflow: hidden;
     touch-action: none;
