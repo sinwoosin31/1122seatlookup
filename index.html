@@ -11,7 +11,7 @@
 <style>
 /* ===== 全局 ===== */
 html, body {
-    height: 100%;
+    min-height: 100vh;
     margin: 0;
     padding: 0;
     font-family: 'Arial', sans-serif;
@@ -20,18 +20,21 @@ html, body {
                 #ffeef8;
     color: #333;
     overflow-x: hidden;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* iOS 惯性滑動 */
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch; 
+    touch-action: pan-y;     /* 手機允許上下滑動 */
+    overscroll-behavior-y: contain; /* 防止滑動被 JS 阻擋 */
 }
 
 body {
-    display: flex;
     flex-direction: column;
     align-items: center;
     min-height: 100vh;
-    padding-top: 70px; /* 確保 header 不會蓋住內容 */
+    /*padding-top: 70px;  確保 header 不會蓋住內容 */
 }
-
+body.menu-open {
+    position: fixed;
+}
 /* ===== Header ===== */
 #headerBar {
     position: sticky;
@@ -419,21 +422,22 @@ footer {
   }, { passive: false });
 
   wrapper.addEventListener("touchmove", (e) => {
-      if (scale > 1) e.preventDefault();   // iOS 安全：僅限放大時阻止預設
-      else return;                         // 未放大時避免白畫面
+        // 只有當圖片放大時才阻止預設，否則讓頁面正常滑動
+        if (scale > 1) e.preventDefault();
+    
+        if (e.touches.length === 2) {
+            // 雙指縮放
+            const newDist = getDistance(e.touches[0], e.touches[1]);
+            scale = Math.min(Math.max(lastScale * (newDist / startDistance), 1), 3);
+            requestUpdate();
+        } else if (e.touches.length === 1 && scale > 1) {
+            // 單指拖曳
+            posX = e.touches[0].clientX - lastX;
+            posY = e.touches[0].clientY - lastY;
+            requestUpdate();
+        }
+    }, { passive: false });
 
-      if (e.touches.length === 2) {
-          const newDist = getDistance(e.touches[0], e.touches[1]);
-          scale = Math.min(Math.max(lastScale * (newDist / startDistance), 1), 3);
-          requestUpdate();
-      }
-
-      if (e.touches.length === 1 && scale > 1) {
-          posX = e.touches[0].clientX - lastX;
-          posY = e.touches[0].clientY - lastY;
-          requestUpdate();
-      }
-  }, { passive: false });
 
   wrapper.addEventListener("touchend", () => {
       lastScale = scale;
