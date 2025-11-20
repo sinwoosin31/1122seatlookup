@@ -646,26 +646,27 @@ footer {
     // ========= marker =========
     function showHeart(seat) {
         const pos = tablePositions[seat];
+        if (!pos) return;
+    
         heart.dataset.seat = seat;
     
+        // 圖片實際顯示大小
         const imgWidth = img.clientWidth;
         const imgHeight = img.clientHeight;
     
-        // 座位在圖片上的比例
+        // 座位在原圖上的比例
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        // 轉換到實際大小
+        // 對應到當前顯示尺寸
         const x = percentX * imgWidth;
         const y = percentY * imgHeight;
     
-        // 加上 transform translate
-        const centerOffsetX = imgWidth / 2;
-        const centerOffsetY = imgHeight / 2;
+        const finalX = x - imgWidth / 2 + wrapper.clientWidth / 2 + posX;
+        const finalY = y - imgHeight / 2 + wrapper.clientHeight / 2 + posY;
     
-        heart.style.left = x - centerOffsetX + posX + "px";
-        heart.style.top = y - centerOffsetY + posY + "px";
-    
+        heart.style.left = finalX + "px";
+        heart.style.top = finalY + "px";
         heart.style.display = "block";
     }
     
@@ -680,15 +681,20 @@ footer {
     
         const pos = tablePositions[seat];
     
-        // 座位百分比
+        const imgWidth = img.clientWidth;
+        const imgHeight = img.clientHeight;
+    
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        const x = img.clientWidth * percentX + posX;
-        const y = img.clientHeight * percentY + posY;
+        const x = percentX * imgWidth;
+        const y = percentY * imgHeight;
     
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
+        const finalX = x - imgWidth / 2 + wrapper.clientWidth / 2 + posX;
+        const finalY = y - imgHeight / 2 + wrapper.clientHeight / 2 + posY;
+    
+        heart.style.left = finalX + "px";
+        heart.style.top = finalY + "px";
     }
 
 </script>
