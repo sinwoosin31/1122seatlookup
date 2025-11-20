@@ -8,98 +8,83 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>品睿♡瑜歆婚宴座位查詢</title>
-
 <style>
-    /* ===== 全局 ===== */
-  body {
-    font-family: 'Arial', sans-serif;
+/* ===== 全局 ===== */
+html, body {
+    height: 100%;
     margin: 0;
-    padding: 60px 0 0 0; /* 去掉左右 padding */
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
     background: radial-gradient(circle at 20% 30%, #ffd6e9, transparent 60%),
                 radial-gradient(circle at 80% 70%, #ffe4f2, transparent 60%),
                 #ffeef8;
     color: #333;
     overflow-x: hidden;
-  }
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* iOS 惯性滑動 */
+}
 
-  /* ===== Header 外觀 ===== */
-    #headerBar {
-        position: relative;
-        width: 100%;
-        padding: 14px 0;
-        background: white;
-        box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-        text-align: center;
-        z-index: 1000;
-    }
-    
-    /* ===== Title 置中 & 品牌感 ===== */
-    #headerBar .title {
-        font-size: 20px;
-        font-weight: 600;
-        letter-spacing: 0.5px;
-        color: #e2678a; /* 粉婚禮色 */
-        font-family: "Noto Sans TC", sans-serif;
-    }
-    
-    /* ===== 菜單按鈕 - 小圓形，不會變形 ===== */
-    #menuBtn {
-        position: absolute;
-        left: 16px;
-        top: 50%;
-        transform: translateY(-50%);
-    
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        border: none;
-    
-        background: #ffffff;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        color: #e2678a;
-        font-weight: 600;
-        cursor: pointer;
-    
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    
-        transition: all .25s ease;
-    }
-    
-    /* hover 品牌風精緻感 */
-    #menuBtn:hover {
-        transform: translateY(-50%) scale(1.05);
-        background: #ffe6ef;
-    }
-    
-    /* ===== 手機版調整（讓按鈕保持美觀） ===== */
-    @media (max-width: 600px) {
-        #headerBar .title {
-            font-size: 16px;
-            padding: 0 40px;
-            display: inline-block;
-        }
-    
-        #menuBtn {
-            width: 38px;
-            height: 38px;
-            font-size: 12px;
-        }
-    }
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding-top: 70px; /* 確保 header 不會蓋住內容 */
+}
 
+/* ===== Header ===== */
+#headerBar {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255, 240, 245, 0.75); /* 淺粉玻璃感 */
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #f6d6e4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
 
-  /* ===== Container 卡片 ===== */
-  .container {
-    width: 90%;         /* 手機版寬度 90%，自動縮小 */
+#headerBar .title {
+    font-size: 18px;
+    font-family: "Didot", "Times New Roman", serif;
+    font-weight: 600;
+    color: #d85b88;
+    letter-spacing: 1px;
+}
+
+/* ===== 小圓形按鈕 ===== */
+#menuBtn {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #ff9bbd;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    transition: 0.2s ease;
+}
+#menuBtn:hover {
+    background: #ff7bab;
+    transform: translateY(-50%) scale(1.05);
+}
+
+/* ===== Container 卡片 ===== */
+.container {
+    position: relative; /* 新增：心形定位 */
+    width: 90%;
     max-width: 420px;
-    margin: 0 auto 20px; /* 上下間距 + 水平置中 */
+    margin: 0 auto 20px;
     text-align: center;
-    padding: 25px 15px; /* 保留內邊距 */
+    padding: 25px 15px;
     border-radius: 20px;
     background: rgba(255,255,255,0.45);
     backdrop-filter: blur(14px);
@@ -107,9 +92,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-  /* 卡片裝飾小愛心 */
-  .container::after {
+}
+
+/* 心形裝飾 */
+.container::after {
     content: '♡';
     position: absolute;
     top: -12px;
@@ -117,48 +103,46 @@
     font-size: 20px;
     color: rgba(255,105,180,0.6);
     animation: heartbeat 1.5s infinite;
-  }
-  @keyframes heartbeat {
+}
+@keyframes heartbeat {
     0%, 100% { transform: scale(1); }
     25%, 75% { transform: scale(1.2); }
     50% { transform: scale(1.1); }
-  }
+}
 
-  /* ===== 標題 ===== */
-  h1 {
+/* ===== 標題 ===== */
+h1 {
     color: #ff5fa2;
     font-size: 22px;
     margin: 8px 0;
     text-shadow: 0 2px 6px rgba(255, 150, 200, 0.4);
-  }
+}
 
-  /* ===== 輸入框 ===== */
-  input[type="text"] {
-    width: 82%;
+/* ===== 輸入框 ===== */
+input[type="text"] {
+    width: 100%;
+    max-width: 350px;
     padding: 12px 15px;
     border-radius: 12px;
     border: 2px solid #ffceeb;
     background: #fff8fc;
     font-size: 16px;
-    margin-bottom: 15px;
+    margin: 10px 0;
     box-shadow: inset 0 0 8px rgba(255, 150, 200, 0.2);
     transition: all 0.2s ease;
-  }
-  input[type="text"]:focus {
+}
+input[type="text"]:focus {
     border-color: #ff69b4;
     box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
     outline: none;
-  }
-    input[type="text"],
-button#searchBtn {
-    width: 100%;      /* 直接填滿 container */
-    max-width: 350px; /* 限制最大寬度 */
-    margin: 10px 0;   /* 上下間距，水平置中 */
-    display: block;
 }
 
-  /* ===== 按鈕 ===== */
-  button {
+/* ===== 按鈕 ===== */
+button {
+    width: 100%;
+    max-width: 350px;
+    margin: 10px 0;
+    display: block;
     background: linear-gradient(135deg, #ff9acb, #ff77a9);
     color: white;
     border: none;
@@ -166,16 +150,16 @@ button#searchBtn {
     border-radius: 12px;
     font-size: 16px;
     cursor: pointer;
-    width: 90%;
-    margin-bottom: 10px;
     box-shadow: 0 4px 12px rgba(255, 120, 180, 0.4);
     transition: transform 0.15s ease, box-shadow 0.2s ease;
-  }
-  button:hover {
+}
+button:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 18px rgba(255, 120, 180, 0.55);
-  }
-  .option-btn {
+}
+
+/* option 按鈕 */
+.option-btn {
     display: block;
     margin: 6px auto;
     background: linear-gradient(135deg, #ffb3cc, #ff8cb4);
@@ -187,14 +171,14 @@ button#searchBtn {
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(255, 100, 180, 0.35);
     transition: transform 0.15s ease, box-shadow 0.2s ease;
-  }
-  .option-btn:hover {
+}
+.option-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(255, 100, 180, 0.45);
-  }
+}
 
-  /* ===== 座位圖 ===== */
-  #imageWrapper {
+/* ===== 座位圖 ===== */
+#imageWrapper {
     width: 100%;
     max-width: 400px;
     margin: 15px auto 0;
@@ -202,63 +186,64 @@ button#searchBtn {
     overflow: hidden;
     touch-action: none;
     box-shadow: 0 6px 18px rgba(255, 120, 180, 0.35);
-  }
-  #seatMap {
+}
+#seatMap {
     width: 100%;
     height: auto;
     border-radius: 12px;
     transform-origin: center center;
     transition: opacity 0.6s, transform 0.3s;
     opacity: 1;
-  }
+}
 
-  /* ===== 結果區 ===== */
-  .result {
+/* ===== 結果區 ===== */
+.result {
     font-size: 18px;
     margin-top: 15px;
     color: #ff4fa0;
     text-shadow: 0 2px 6px rgba(255, 150, 200, 0.6);
-  }
-
-  /* ===== Footer ===== */
-  footer {
-  width: 100%;
-  max-width: 420px;
-  margin: 30px auto 40px;
-  text-align: center;
-  font-size: 14px;
-  background: linear-gradient(120deg, #ffd6e9, #ffe4f2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  opacity: 0.8;
 }
 
-  /* ===== Popup ===== */
-  #menuPopup {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.65);
+/* ===== Footer ===== */
+footer {
+    width: 100%;
+    max-width: 420px;
+    margin: 30px auto 40px;
+    text-align: center;
+    font-size: 14px;
+    background: linear-gradient(120deg, #ffd6e9, #ffe4f2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.8;
+}
+.footer-text {
+    font-size: 14px;
+    font-family: "Times New Roman", serif;
+    color: #d2699f;
+    letter-spacing: 0.5px;
+}
+
+/* ===== Menu Popup ===== */
+#menuPopup {
     display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(3px);
     justify-content: center;
     align-items: center;
-    z-index: 20000;
-  }
-  #menuPopup .popup-content {
-    background: linear-gradient(145deg, #fff0f5, #ffe4f2);
+    z-index: 2000;
+}
+#menuPopup img {
+    width: 80%;
+    max-width: 400px;
     border-radius: 16px;
-    padding: 15px;
-    max-width: 90%;
-    max-height: 90%;
-    overflow: auto;
-    text-align: center;
-    box-shadow: 0 8px 20px rgba(255,105,180,0.25);
-    animation: fadeIn 0.4s ease-out;
-  }
-  #menuPopup img {
-    width: 100%;
-    border-radius: 12px;
-  }
-  #closePopup {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+}
+#closePopup {
     margin-top: 10px;
     padding: 8px 14px;
     border: none;
@@ -266,20 +251,13 @@ button#searchBtn {
     color: white;
     border-radius: 8px;
     cursor: pointer;
-  }
+}
 
-  /* ===== 淡入動畫 ===== */
-  .fade-in {
-    opacity: 0;
-    animation: fadeIn 0.8s ease-out forwards;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to   { opacity: 1; transform: scale(1); }
-  }
+/* ===== 動畫 ===== */
+.fade-in { opacity: 0; animation: fadeIn 0.8s ease-out forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: scale(0.98);} to {opacity:1; transform: scale(1);} }
 
-  /* ===== Loading ===== */
-  .loading {
+.loading {
     width: 40px;
     height: 40px;
     border: 4px solid #ffb6c1;
@@ -287,112 +265,14 @@ button#searchBtn {
     border-radius: 50%;
     margin: 15px auto;
     animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-    /* ===== 修正 iOS 被往上推 & 無法滑動 ===== */
-    html, body {
-        height: 100%;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch; /* iOS 惯性滑動 */
-    }
-    
-    /* 移除 flex 造成 iOS 擠壓 */
-    body {
-        display: block !important;
-        padding-top: 70px; /* 確保 header 不會蓋住內容 */
-    }
-    
-    /* 防止 Popup 開啟時畫面跳動 */
-    body.menu-open {
-        position: fixed;
-        width: 100%;
-        overflow: hidden;
-    }
-　/* ===== 優雅婚禮風 Header ===== */
-    #headerBar {
-      position: sticky;
-      top: 0;
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255, 240, 245, 0.75); /* 淺粉玻璃感 */
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid #f6d6e4;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-    
-    #headerBar .title {
-      font-size: 18px;
-      font-family: "Didot", "Times New Roman", serif;
-      font-weight: 600;
-      color: #d85b88;
-      letter-spacing: 1px;
-    }
-    
-    /* ===== 小圓形可愛按鈕 (右上角) ===== */
-    .circle-btn {
-      position: absolute;
-      right: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: none;
-      background: #ff9bbd;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
-      transition: 0.2s ease;
-    }
-    
-    .circle-btn:hover {
-      background: #ff7bab;
-      transform: translateY(-50%) scale(1.05);
-    }
-    
-    /* ===== Menu Popup ===== */
-    #menuPopup {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(3px);
-      justify-content: center;
-      align-items: center;
-      z-index: 2000;
-    }
-    
-    #menuPopup img {
-      width: 80%;
-      max-width: 400px;
-      border-radius: 16px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-    }
-    
-    /* ===== Footer ===== */
-    #footerBar {
-      width: 100%;
-      padding: 12px 0;
-      background: #ffe8f1;
-      text-align: center;
-      border-top: 1px solid #f4c9d7;
-      margin-top: 40px;
-    }
-    
-    .footer-text {
-      font-size: 14px;
-      font-family: "Times New Roman", serif;
-      color: #d2699f;
-      letter-spacing: 0.5px;
-    }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
+/* ===== 手機版 ===== */
+@media (max-width: 600px) {
+    #headerBar .title { font-size: 16px; padding: 0 40px; display: inline-block; }
+    #menuBtn { width: 38px; height: 38px; font-size: 12px; }
+}
 </style>
 </head>
 
