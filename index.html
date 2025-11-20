@@ -638,8 +638,8 @@ footer {
 
     const heart = document.getElementById("heartMarker");
     const tablePositions = {
-        "1": { x: 620, y: 368.5 },
-        "2": { x: 608.7, y: 424.5 },
+        "1": { x: 791, y: 527.4 },
+        "2": { x: 801.3, y: 722 },
         "3": { x: 608.7, y: 676.5 },
         "4": { x: 608.7, y: 440.5 }
     };
@@ -685,28 +685,6 @@ footer {
         heart.style.top  = y + "px";
     }
     
-    // ====== 座標抓取工具 ======
-    const seatMap = document.getElementById('seatMap');
-    const capturedPositions = {};
-    
-    seatMap.addEventListener('click', (e) => {
-        e.preventDefault();
-        const rect = seatMap.getBoundingClientRect();
-    
-        // 計算相對於圖片左上角的比例座標
-        const x = ((e.clientX - rect.left) / seatMap.clientWidth) * seatMap.naturalWidth;
-        const y = ((e.clientY - rect.top) / seatMap.clientHeight) * seatMap.naturalHeight;
-    
-        // 提示輸入座位號
-        const seatNum = prompt(`輸入座位號碼 (目前點擊位置 x:${x.toFixed(1)}, y:${y.toFixed(1)}):`);
-        if (!seatNum) return;
-    
-        capturedPositions[seatNum] = { x: parseFloat(x.toFixed(1)), y: parseFloat(y.toFixed(1)) };
-        console.log("已記錄座位:", seatNum, capturedPositions[seatNum]);
-        console.log("目前 JSON:", JSON.stringify(capturedPositions, null, 2));
-        
-        alert(`座位 ${seatNum} 記錄完成！\n座標: x=${x.toFixed(1)}, y=${y.toFixed(1)}`);
-    });
 </script>
 
 
