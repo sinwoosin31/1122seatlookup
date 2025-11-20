@@ -284,7 +284,26 @@
     animation: spin 0.8s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
-</style>
+    /* ===== 修正 iOS 被往上推 & 無法滑動 ===== */
+    html, body {
+        height: 100%;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch; /* iOS 惯性滑動 */
+    }
+    
+    /* 移除 flex 造成 iOS 擠壓 */
+    body {
+        display: block !important;
+        padding-top: 70px; /* 確保 header 不會蓋住內容 */
+    }
+    
+    /* 防止 Popup 開啟時畫面跳動 */
+    body.menu-open {
+        position: fixed;
+        width: 100%;
+        overflow: hidden;
+    }
+
 </style>
 </head>
 
@@ -483,12 +502,22 @@
   // ===== Popup 開關控制 =====
   document.getElementById("menuBtn").onclick = function () {
     document.getElementById("menuPopup").style.display = "flex";
-  };
+    document.body.classList.add("menu-open"); 
+};
   
-  document.getElementById("closePopup").onclick = function () {
+document.getElementById("closePopup").onclick = function () {
     document.getElementById("menuPopup").style.display = "none";
-  };
-  
+    document.body.classList.remove("menu-open");
+};
+
+document.getElementById("menuPopup").onclick = function (e) {
+    if (e.target === this) {
+        document.getElementById("menuPopup").style.display = "none";
+        document.body.classList.remove("menu-open");
+    }
+};
+
+
   // 點 popup 背景也會關閉
   document.getElementById("menuPopup").onclick = function (e) {
     if (e.target === this) this.style.display = "none";
