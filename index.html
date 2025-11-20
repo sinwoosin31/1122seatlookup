@@ -219,16 +219,20 @@ footer {
     margin: 30px auto 40px;
     text-align: center;
     font-size: 14px;
-    background: linear-gradient(120deg, #ffd6e9, #ffe4f2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    opacity: 0.8;
+    border-radius: 20px;
+    background: rgba(255, 240, 245, 0.5); /* 玻璃感背景 */
+    backdrop-filter: blur(12px);         
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.25); /* 柔和陰影 */
 }
 .footer-text {
     font-size: 14px;
     font-family: "Times New Roman", serif;
-    color: #d2699f;
+    color: #d85b88;
     letter-spacing: 0.5px;
+    background: linear-gradient(120deg, #ff9acb, #ff77a9); /* 漸層文字 */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 4px rgba(255, 105, 180, 0.3); /* 柔和陰影增加對比 */
 }
 
 /* ===== Menu Popup ===== */
