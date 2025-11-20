@@ -99,16 +99,18 @@
   .container {
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(14px);
-    padding: 25px;
+    padding: 25px 20px;
     border-radius: 20px;
     box-shadow: 0 10px 25px rgba(255, 105, 180, 0.3);
     width: 100%;
     max-width: 420px;
-    text-align: center;
+    margin: 20px auto;      /* 水平置中 + 上下間距 */
+    text-align: center;      /* 內部文字與 inline 元素置中 */
     border: 1px solid rgba(255, 192, 203, 0.5);
-    animation: fadeIn 1s ease;
-    margin-top: 10px;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;     /* 垂直排列 + 水平置中 */
     flex: 1 0 auto;
   }
   /* 卡片裝飾小愛心 */
@@ -152,6 +154,13 @@
     box-shadow: 0 0 12px rgba(255, 105, 180, 0.4);
     outline: none;
   }
+    input[type="text"],
+button#searchBtn {
+    width: 90%;             /* 統一百分比寬度 */
+    max-width: 350px;       /* 手機上不要太寬 */
+    margin: 10px auto;      /* 水平置中 + 上下間距 */
+    display: block;         /* 百分比寬度有效 */
+}
 
   /* ===== 按鈕 ===== */
   button {
@@ -192,9 +201,10 @@
   /* ===== 座位圖 ===== */
   #imageWrapper {
     width: 100%;
-    overflow: hidden;
+    max-width: 400px;
+    margin: 15px auto 0;   /* 水平置中 */
     border-radius: 16px;
-    margin-top: 15px;
+    overflow: hidden;
     touch-action: none;
     box-shadow: 0 6px 18px rgba(255, 120, 180, 0.35);
   }
@@ -400,7 +410,7 @@
   
   <!-- ===== 菜單 Popup ===== -->
   　<div id="menuPopup">
-      <img src="menu.png" alt="Menu">
+      <img src="./img/menu.png" alt="Menu">
     </div>
 
   <div class="container">
