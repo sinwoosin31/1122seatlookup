@@ -76,7 +76,8 @@ body.menu-open {
     justify-content: center; 
     align-items: center;    
     padding: 0;              
-    line-height: 1;      
+    line-height: 1;   
+    animation: bounce 2s infinite;
 }
 #menuBtn:hover {
     background: #ff7bab;
@@ -286,6 +287,31 @@ footer {
     #headerBar .title { font-size: 16px; padding: 0 40px; display: inline-block; }
     #menuBtn { width: 38px; height: 38px; font-size: 12px; }
 }
+    /* ===== 新增：漢堡選單提示文字 ===== */
+.menu-hint {
+    font-size: 12px;
+    color: #d85b88;
+    margin-left: 8px;
+    vertical-align: middle;
+    opacity: 0.9;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* ===== 首次使用動畫 ===== */
+.menu-hint.first-time {
+    animation: fadeInOut 3s ease-in-out forwards;
+}
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-5px); }
+    20% { opacity: 1; transform: translateY(0); }
+    80% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-5px); }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(-50%); }
+    50% { transform: translateY(-53%); }  /* 上下微動 */
+}
 </style>
 </head>
 
@@ -293,7 +319,7 @@ footer {
   <!-- ===== Header ===== -->
   <div id="headerBar">
       <span class="title">2025.11.22 品睿♡瑜歆 婚宴資訊</span>
-      <button id="menuBtn" class="circle-btn">☰</button>
+      <span id="menuHint" class="menu-hint first-time">選單</span>
 　</div>
   
   <!-- ===== 菜單 Popup ===== -->
@@ -516,7 +542,15 @@ footer {
         }
     });
 
-
+    window.addEventListener("DOMContentLoaded", () => {
+    const hint = document.getElementById("menuHint");
+    if (hint) {
+        // 3秒後移除動畫，避免一直閃
+        setTimeout(() => {
+            hint.classList.remove("first-time");
+        }, 3000);
+    }
+});
 </script>
 
 
