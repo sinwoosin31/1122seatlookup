@@ -68,7 +68,7 @@ body.menu-open {
     display: flex;
     flex-direction: column;
     align-items: center;
-    animation: bounce 2s infinite;
+    animation: bounce 1.2s infinite;
 }
 .menu-wrapper #menuBtn {
     width: 60px;
@@ -136,8 +136,15 @@ body.menu-open {
 /* 小跳動動畫 */
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    25%, 75% { transform: translateY(-6px); } 
+    50% { transform: translateY(-12px); }    
 }
+    
+.menu-btn-wrapper .menu-label {
+    margin-top: 4px; /* 調整成 4px，比原本 6px 靠近 */
+    font-size: 14px;
+}
+    
 /* ===== Container 卡片 ===== */
 .container {
     position: relative; /* 新增：心形定位 */
