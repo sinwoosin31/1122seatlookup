@@ -634,32 +634,41 @@ footer {
         }
     });
 
+    const heart = document.getElementById("heartMarker");
     const tablePositions = {
         "1": { x: 608.7, y: 549.5 },
         "2": { x: 608.7, y: 613.5 },
         "3": { x: 608.7, y: 676.5 },
         "4": { x: 608.7, y: 440.5 }
     };
-    const heart = document.getElementById("heartMarker");
-
+        
+    // ========= marker =========
     function showHeart(seat) {
-        const pos = tablePositions[seat];
-
-        // 圖片縮放比例SS
-        const scaleX = img.width / img.naturalWidth;
-        const scaleY = img.height / img.naturalHeight;
-    
-        // 計算相對 imageWrapper 的座標
-        const x = pos.x * scaleX + posX; 
-        const y = pos.y * scaleY + posY;
-    
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
+        heart.dataset.seat = seat; // 儲存當前座位
         heart.style.display = "block";
+        updateHeart();
     }
     
     function hideHeart() {
         heart.style.display = "none";
+        delete heart.dataset.seat;
+    }
+    
+    function updateHeart() {
+        const seat = heart.dataset.seat;
+        if (!seat) return;
+    
+        const pos = tablePositions[seat];
+    
+        // 計算相對圖片的位置
+        const scaleX = img.width / img.naturalWidth;
+        const scaleY = img.height / img.naturalHeight;
+    
+        const x = pos.x * scaleX + posX;
+        const y = pos.y * scaleY + posY;
+    
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
     }
 
 </script>
