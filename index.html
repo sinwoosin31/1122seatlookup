@@ -62,9 +62,6 @@ body.menu-open {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     z-index: 9999;
 }
 
@@ -106,7 +103,8 @@ body.menu-open {
     cursor: pointer;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
     transition: transform 0.2s ease, background 0.2s ease;
-    display: flex;           
+    display: flex;        
+    flex-direction: column;   
     justify-content: center; 
     align-items: center;    
     padding: 0;              
@@ -123,6 +121,13 @@ body.menu-open {
     height: 40px;
     display: block;
     pointer-events: none;
+}
+#menuBtn .menu-label {
+    font-size: 14px;
+    color: #d85b88;
+    font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+    margin-top: 4px;  /* 圖片與文字間距 */
+    pointer-events: none; /* 避免文字影響按鈕點擊 */
 }
 /* 小跳動動畫 */
 @keyframes bounce {
@@ -370,9 +375,9 @@ footer {
   </div>
 <div class="menu-wrapper">
   <button id="menuBtn">
-        <img src="./img/menu-icon.png" alt="菜單">
+    <img src="./img/menu-icon.png" alt="選單">
+    <span class="menu-label">菜單</span>
   </button>
-  <div class="menu-label">菜單</div>
 </div>
     <!-- ===== Footer ===== -->
     <footer id="footerBar">
