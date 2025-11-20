@@ -200,9 +200,9 @@ body.menu-open {
     pointer-events: none;  
 }
 @keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    25%, 75% { transform: scale(1.2); }
-    50% { transform: scale(1.1); }
+    0%, 100% { transform: translate(-50%, -50%) scale(1); }
+    25%, 75% { transform: translate(-50%, -50%) scale(1.2); }
+    50% { transform: translate(-50%, -50%) scale(1.1); }
 }
 
 /* ===== 標題 ===== */
@@ -388,6 +388,7 @@ footer {
     transform: translate(-50%, -50%);
     display: none; /* 預設隱藏 */
     z-index: 2000;
+    animation: heartbeat 1s infinite;
 }
 </style>
 </head>
@@ -638,6 +639,7 @@ footer {
 
     const heart = document.getElementById("heartMarker");
     const tablePositions = {
+        "當然是主桌啊!!": { x: 509.4, y: 343 },
         "主桌": { x: 509.4, y: 343 },
         "1": { x: 803, y: 551 },
         "2": { x: 803, y: 714.4 },
