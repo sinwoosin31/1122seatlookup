@@ -49,7 +49,7 @@ body.menu-open {
 }
 
 #headerBar .title {
-    font-size: 18px;
+    font-size: 16px;
     font-family: "Didot", "Times New Roman", serif;
     font-weight: 600;
     color: #d85b88;
@@ -109,7 +109,12 @@ body.menu-open {
     flex-direction: column;
     align-items: center;
 }
-
+.container h1 {
+    font-family: "Didot", "Times New Roman", serif; 
+    font-size: 28px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
 /* 心形裝飾 */
 .container::after {
     content: '♡';
@@ -295,6 +300,9 @@ footer {
 @media (max-width: 600px) {
     #headerBar .title { font-size: 16px; padding: 0 40px; display: inline-block; }
     #menuBtn { width: 50px; height: 50px; font-size: 12px; }
+    .container h1 {
+        font-size: 22px; 
+    }
 }
 </style>
 </head>
