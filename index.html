@@ -167,7 +167,7 @@ body.menu-open {
     
 /* ===== Container 卡片 ===== */
 .container {
-    position: static; 
+    position: relative; 
     width: 90%;
     max-width: 420px;
     margin: 0 auto 20px;
@@ -642,18 +642,13 @@ footer {
 
     function showHeart(seat) {
         const pos = tablePositions[seat];
-        const imgRect = img.getBoundingClientRect();
-        const wrapperRect = wrapper.getBoundingClientRect();
-    
-        // 計算縮放比例（避免圖片縮放後座標對不到）
+
+        // 相對 wrapper 計算
         const scaleX = img.width / img.naturalWidth;
         const scaleY = img.height / img.naturalHeight;
     
-        const x = wrapperRect.left + pos.x * scaleX;
-        const y = wrapperRect.top + pos.y * scaleY;
-    
-        heart.style.left = x + "px";
-        heart.style.top = y + "px";
+        heart.style.left = (pos.x * scaleX) + "px";
+        heart.style.top = (pos.y * scaleY) + "px";
         heart.style.display = "block";
     }
     
