@@ -379,6 +379,15 @@ footer {
         font-size: 22px; 
     }
 }
+#heartMarker {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 32px;
+    transform: translate(-50%, -50%);
+    display: none; /* 預設隱藏 */
+    z-index: 2000;
+}
 </style>
 </head>
 
@@ -405,6 +414,7 @@ footer {
       <img id="seatMap" class="fade-in" 
            src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
     </div>
+    <div id="heartMarker">❤️</div>
   </div>
 <div class="menu-wrapper">
   <div class="menu-btn-wrapper">
@@ -452,6 +462,11 @@ footer {
       resultDiv.innerHTML = "";
       if (data.seat) {
           resultDiv.innerHTML = `🎀 ${data.name} 的座位是 ${data.seat} 🎀<br>`;
+          if(tablePositions[data.seat]) {
+            showHeart(data.seat);
+          }else {
+                hideHeart();
+            }
       } else if (data.multiple) {
           resultDiv.textContent = "找到多位符合的賓客，請選擇：";
           data.multiple.forEach(item => {
@@ -461,6 +476,11 @@ footer {
               btn.onclick = () => {
                   resultDiv.innerHTML = `🎀 ${item.name} 的座位是 ${item.seat} 🎀<br>`;
               };
+              if(tablePositions[data.seat]) {
+                showHeart(data.seat);
+              }else {
+                    hideHeart();
+                }
               resultDiv.appendChild(btn);
           });
       } else {
@@ -613,6 +633,33 @@ footer {
         }
     });
 
+    const tablePositions = {
+        "1": { x: 200, y: 150 },
+        "2": { x: 300, y: 180 },
+        "3": { x: 250, y: 300 }
+    };
+    const heart = document.getElementById("heartMarker");
+
+    function showHeart(seat) {
+        const pos = tablePositions[seat];
+        const imgRect = img.getBoundingClientRect();
+        const wrapperRect = wrapper.getBoundingClientRect();
+    
+        // 計算縮放比例（避免圖片縮放後座標對不到）
+        const scaleX = img.width / img.naturalWidth;
+        const scaleY = img.height / img.naturalHeight;
+    
+        const x = wrapperRect.left + pos.x * scaleX;
+        const y = wrapperRect.top + pos.y * scaleY;
+    
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
+        heart.style.display = "block";
+    }
+    
+    function hideHeart() {
+        heart.style.display = "none";
+    }
 
 </script>
 
