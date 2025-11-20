@@ -388,7 +388,12 @@ footer {
     transform: translate(-50%, -50%);
     display: none; /* 預設隱藏 */
     z-index: 2000;
-    animation: heartbeat 1s infinite;
+    animation: floatGlow 2s ease-in-out infinite;
+}
+@keyframes floatGlow {
+    0%   { transform: translate(-50%, -50%) translateY(0); text-shadow: 0 0 5px #ff77b7; }
+    50%  { transform: translate(-50%, -50%) translateY(-8px); text-shadow: 0 0 15px #ff77b7; }
+    100% { transform: translate(-50%, -50%) translateY(0); text-shadow: 0 0 5px #ff77b7; }
 }
 </style>
 </head>
