@@ -654,9 +654,8 @@ footer {
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        // 真正座標 = 圖片左上角 + transform 平移
-        const x = percentX * img.clientWidth + posX;
-        const y = percentY * img.clientHeight + posY;
+        const x = percentX * img.clientWidth * scale + posX;
+        const y = percentY * img.clientHeight * scale + posY;
     
         heart.style.left = x + "px";
         heart.style.top = y + "px";
@@ -676,8 +675,8 @@ footer {
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        const x = percentX * img.clientWidth + posX;
-        const y = percentY * img.clientHeight + posY;
+        const x = percentX * img.clientWidth * scale + posX;
+        const y = percentY * img.clientHeight * scale + posY;
     
         heart.style.left = x + "px";
         heart.style.top = y + "px";
