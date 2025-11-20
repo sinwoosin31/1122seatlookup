@@ -187,7 +187,7 @@ button:hover {
     margin: 15px auto 0;
     border-radius: 16px;
     overflow: hidden;
-    touch-action: none;
+    touch-action: pan-x pan-y;
     box-shadow: 0 6px 18px rgba(255, 120, 180, 0.35);
 }
 #seatMap {
@@ -422,21 +422,21 @@ footer {
   }, { passive: false });
 
   wrapper.addEventListener("touchmove", (e) => {
-        // 只有當圖片放大時才阻止預設，否則讓頁面正常滑動
-        if (scale > 1) e.preventDefault();
-    
-        if (e.touches.length === 2) {
-            // 雙指縮放
-            const newDist = getDistance(e.touches[0], e.touches[1]);
-            scale = Math.min(Math.max(lastScale * (newDist / startDistance), 1), 3);
-            requestUpdate();
-        } else if (e.touches.length === 1 && scale > 1) {
-            // 單指拖曳
-            posX = e.touches[0].clientX - lastX;
-            posY = e.touches[0].clientY - lastY;
-            requestUpdate();
-        }
-    }, { passive: false });
+    if (scale <= 1) return;  // 未放大時不做任何 transform，也不阻止頁面滾動
+
+    e.preventDefault();       // 只有放大時阻止預設滾動
+
+    if (e.touches.length === 2) {
+        const newDist = getDistance(e.touches[0], e.touches[1]);
+        scale = Math.min(Math.max(lastScale * (newDist / startDistance), 1), 3);
+        requestUpdate();
+    } else if (e.touches.length === 1) {
+        posX = e.touches[0].clientX - lastX;
+        posY = e.touches[0].clientY - lastY;
+        requestUpdate();
+    }
+}, { passive: false });
+
 
 
   wrapper.addEventListener("touchend", () => {
