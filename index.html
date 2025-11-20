@@ -663,6 +663,7 @@ footer {
         return { x, y };
     }
     function showHeart(seat) {
+        heart.dataset.seat = seat;
         const { x, y } = getHeartPosition(seat);
         heart.style.left = x + "px";
         heart.style.top  = y + "px";
