@@ -411,10 +411,11 @@ footer {
   
     <!-- 座位圖（預先顯示） -->
     <div id="imageWrapper">
-      <img id="seatMap" class="fade-in" 
+        <img id="seatMap" class="fade-in" 
            src="https://sinwoosin31.github.io/1122seatlookup/img/seat.png">
+        <div id="heartMarker">❤️</div>
     </div>
-    <div id="heartMarker">❤️</div>
+    
   </div>
 <div class="menu-wrapper">
   <div class="menu-btn-wrapper">
@@ -644,14 +645,13 @@ footer {
     function showHeart(seat) {
         const pos = tablePositions[seat];
 
-        // 取得圖片原始大小縮放比例
-        const scaleFactor = scale; 
-        const imgRect = img.getBoundingClientRect();
-        const wrapperRect = wrapper.getBoundingClientRect();
+        // 圖片縮放比例SS
+        const scaleX = img.width / img.naturalWidth;
+        const scaleY = img.height / img.naturalHeight;
     
-        // 計算 marker 的最終座標
-        const x = pos.x * (img.width / img.naturalWidth) * scaleFactor + posX + wrapperRect.left;
-        const y = pos.y * (img.height / img.naturalHeight) * scaleFactor + posY + wrapperRect.top;
+        // 計算相對 imageWrapper 的座標
+        const x = pos.x * scaleX + posX; 
+        const y = pos.y * scaleY + posY;
     
         heart.style.left = x + "px";
         heart.style.top = y + "px";
