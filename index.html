@@ -274,6 +274,7 @@ button:hover {
 
 /* ===== 座位圖 ===== */
 #imageWrapper {
+    position: relative;
     width: 100%;
     max-width: 400px;
     margin: 15px auto 0;
@@ -650,23 +651,15 @@ footer {
     
         heart.dataset.seat = seat;
     
-        // 圖片實際顯示大小
-        const imgWidth = img.clientWidth;
-        const imgHeight = img.clientHeight;
-    
-        // 座位在原圖上的比例
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        // 對應到當前顯示尺寸
-        const x = percentX * imgWidth;
-        const y = percentY * imgHeight;
+        // 真正座標 = 圖片左上角 + transform 平移
+        const x = percentX * img.clientWidth + posX;
+        const y = percentY * img.clientHeight + posY;
     
-        const finalX = x - imgWidth / 2 + wrapper.clientWidth / 2 + posX;
-        const finalY = y - imgHeight / 2 + wrapper.clientHeight / 2 + posY;
-    
-        heart.style.left = finalX + "px";
-        heart.style.top = finalY + "px";
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
         heart.style.display = "block";
     }
     
@@ -680,21 +673,14 @@ footer {
         if (!seat) return;
     
         const pos = tablePositions[seat];
-    
-        const imgWidth = img.clientWidth;
-        const imgHeight = img.clientHeight;
-    
         const percentX = pos.x / img.naturalWidth;
         const percentY = pos.y / img.naturalHeight;
     
-        const x = percentX * imgWidth;
-        const y = percentY * imgHeight;
+        const x = percentX * img.clientWidth + posX;
+        const y = percentY * img.clientHeight + posY;
     
-        const finalX = x - imgWidth / 2 + wrapper.clientWidth / 2 + posX;
-        const finalY = y - imgHeight / 2 + wrapper.clientHeight / 2 + posY;
-    
-        heart.style.left = finalX + "px";
-        heart.style.top = finalY + "px";
+        heart.style.left = x + "px";
+        heart.style.top = y + "px";
     }
 
 </script>
